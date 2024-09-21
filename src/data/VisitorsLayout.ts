@@ -1,5 +1,7 @@
 import { Layout } from "@/entities/Layout";
 import { MonthlyDesktopVisitors } from "./MonthlyDesktopVisitorsKpi";
+import { MonthlyMobileVisitors } from "./MonthlyMobileVisitorsKpi";
+import { MonthlyVisitorsBrowser } from "./MonthlyVisitorsBrowserKpi";
 
 export const VisitorsLayout: Layout = {
   name: "VL",
@@ -12,6 +14,14 @@ export const VisitorsLayout: Layout = {
     {
       kpi: MonthlyDesktopVisitors,
       kpiChartIndex: 2,
+    },
+    {
+      kpi: MonthlyMobileVisitors,
+      kpiChartIndex: 1,
+    },
+    {
+      kpi: MonthlyVisitorsBrowser,
+      kpiChartIndex: 1,
     },
   ],
 };

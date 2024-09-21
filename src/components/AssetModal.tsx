@@ -11,7 +11,7 @@ import { AssetCard } from "./AssetCard";
 import { Bookmark, Grid3X3, Link2 } from "lucide-react";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
-import { Kpi } from "@/entities/Kpi";
+import { Kpi, VisualChart } from "@/entities/Kpi";
 import { BarChartViz } from "@/charts/BarChartViz";
 import { BarChartHorizontalViz } from "@/charts/BarCharHorizontalViz";
 import { LineChartViz } from "@/charts/LineChartViz";
@@ -25,6 +25,22 @@ type AssetModalProps = {
 };
 
 export const AssetModal = ({ type, kpi, layout }: AssetModalProps) => {
+  let questions: string[] = [];
+  let visuals: VisualChart[] = [];
+  if (kpi) {
+    questions = kpi.businessQuestions;
+    visuals = kpi.visuals;
+  }
+
+  if (layout) {
+    // questions = layout.visuals.reduce((acc: string[], l) => {
+    //   return [...acc, ...l.kpi.businessQuestions];
+    // }, []);
+    visuals = layout.visuals.reduce((acc: VisualChart[], v) => {
+      return [...acc, v.kpi.visuals[v.kpiChartIndex]];
+    }, []);
+  }
+
   return (
     <Dialog>
       <DialogTrigger>
@@ -49,10 +65,10 @@ export const AssetModal = ({ type, kpi, layout }: AssetModalProps) => {
             {kpi?.descrioption ?? layout?.descrioption}
           </DialogDescription>
         </DialogHeader>
-        {type === "KPI" && (
+        {kpi && type === "KPI" && (
           <div className="flex flex-col gap-4 mt-8">
             <div className="text-3xl font-semibold">Available Charts</div>
-            {kpi?.visuals.map((v, i) => {
+            {visuals.map((v, i) => {
               return (
                 <div key={v.type}>
                   {v.type === "BarChart" && (
@@ -92,24 +108,60 @@ export const AssetModal = ({ type, kpi, layout }: AssetModalProps) => {
           </div>
         )}
 
-        <div className="mt-16">
-          <div className="text-3xl font-semibold mb-4">Business Questions</div>
-          <div className="grid grid-cols-2 gap-4">
-            {kpi?.businessQuestions.map((q) => {
-              return <BusinessQuestion q={q} />;
-            })}
+        {layout?.visuals.map((v) => {
+          const i = v.kpiChartIndex;
+          const type = v.kpi.visuals[i].type;
+          const kpi = v.kpi;
 
-            {layout?.visuals.map((v) => {
-              return (
-                <>
-                  {v.kpi.businessQuestions.map((q) => {
-                    return <BusinessQuestion q={q} />;
-                  })}
-                </>
-              );
-            })}
+          return (
+            <div>
+              {type === "BarChart" && (
+                <BarChartViz
+                  chartData={kpi.chartData}
+                  chartConfig={kpi.visuals[i].chartConfig}
+                  dataKeys={kpi.visuals[i].dataKeys}
+                />
+              )}
+
+              {type === "BarChartHorizontal" && (
+                <BarChartHorizontalViz
+                  chartData={kpi.chartData}
+                  chartConfig={kpi.visuals[i].chartConfig}
+                  dataKeys={kpi.visuals[i].dataKeys}
+                />
+              )}
+
+              {type === "LineChart" && (
+                <LineChartViz
+                  chartData={kpi.chartData}
+                  chartConfig={kpi.visuals[i].chartConfig}
+                  dataKeys={kpi.visuals[i].dataKeys}
+                />
+              )}
+
+              {type === "PieChart" && (
+                <PieChartViz
+                  chartData={kpi.chartData}
+                  chartConfig={kpi.visuals[i].chartConfig}
+                  dataKeys={kpi.visuals[i].dataKeys}
+                />
+              )}
+            </div>
+          );
+        })}
+
+        {kpi && (
+          <div className="mt-16">
+            <div className="text-3xl font-semibold mb-4">
+              Business Questions
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              {questions.map((q, i) => {
+                return <BusinessQuestion q={q} i={i + 1} />;
+              })}
+            </div>
           </div>
-        </div>
+        )}
         <DialogFooter>
           <Button className="w-full font-semibold">
             <Bookmark className="mr-2" />
@@ -121,10 +173,10 @@ export const AssetModal = ({ type, kpi, layout }: AssetModalProps) => {
   );
 };
 
-const BusinessQuestion = ({ q }: { q: string }) => {
+const BusinessQuestion = ({ q, i }: { q: string; i: number }) => {
   return (
     <div key={q}>
-      <div className="font-semibold text-lg">Question</div>
+      <div className="font-semibold text-lg">Question {i}</div>
       <div className="text-gray-400">{q}</div>
     </div>
   );
