@@ -5,6 +5,7 @@ import { SectionTitle } from "@/components/SectionTitle";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MonthlyDesktopVisitors } from "@/data/MonthlyDesktopVisitors";
 import { MonthlyMobileVisitors } from "@/data/MonthlyMobileVisitors";
+import { MonthlyVisitorsBrowser } from "./data/MonthlyVisitorsBrowser";
 
 function App() {
   return (
@@ -39,7 +40,11 @@ function App() {
           </div>
         </TabsContent>
         <TabsContent value="kpi" className="grid grid-cols-2 gap-8">
-          {[MonthlyDesktopVisitors, MonthlyMobileVisitors].map((m) => {
+          {[
+            MonthlyDesktopVisitors,
+            MonthlyMobileVisitors,
+            MonthlyVisitorsBrowser,
+          ].map((m) => {
             return <AssetModal key={m.name} type="KPI" kpi={m} />;
           })}
         </TabsContent>

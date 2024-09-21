@@ -43,7 +43,8 @@ export const AssetModal = ({ type, kpi }: AssetModalProps) => {
             {kpi.descrioption}
           </DialogDescription>
         </DialogHeader>
-        <div>
+        <div className="flex flex-col gap-4 mt-8">
+          <div className="text-3xl font-semibold">Available Charts</div>
           {kpi.visuals.map((v, i) => {
             return (
               <div key={v.type}>

@@ -36,13 +36,13 @@ export function BarChartViz({
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
+              tickFormatter={(value) => value}
             />
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
-            <Bar dataKey={dataKeys[1]} fill="hsl(var(--chart-1))" radius={8} />
+            <Bar dataKey={dataKeys[1]} fill="hsl(var(--chart-1))" radius={5} />
           </BarChart>
         </ChartContainer>
       </CardContent>
