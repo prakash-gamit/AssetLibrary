@@ -3,9 +3,10 @@ import { AssetModal } from "@/components/AssetModal";
 import { SectionDescription } from "@/components/SectionDescription";
 import { SectionTitle } from "@/components/SectionTitle";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MonthlyDesktopVisitors } from "@/data/MonthlyDesktopVisitors";
-import { MonthlyMobileVisitors } from "@/data/MonthlyMobileVisitors";
-import { MonthlyVisitorsBrowser } from "./data/MonthlyVisitorsBrowser";
+import { MonthlyDesktopVisitors } from "@/data/MonthlyDesktopVisitorsKpi";
+import { MonthlyMobileVisitors } from "@/data/MonthlyMobileVisitorsKpi";
+import { MonthlyVisitorsBrowser } from "./data/MonthlyVisitorsBrowserKpi";
+import { VisitorsLayout } from "./data/VisitorsLayout";
 
 function App() {
   return (
@@ -45,7 +46,12 @@ function App() {
             MonthlyMobileVisitors,
             MonthlyVisitorsBrowser,
           ].map((m) => {
-            return <AssetModal key={m.name} type="KPI" kpi={m} />;
+            return <AssetModal type="KPI" kpi={m} />;
+          })}
+        </TabsContent>
+        <TabsContent value="layouts" className="grid grid-cols-2 gap-8">
+          {[VisitorsLayout].map((l) => {
+            return <AssetModal type="LAYOUT" layout={l} />;
           })}
         </TabsContent>
       </Tabs>
