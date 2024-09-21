@@ -1,14 +1,17 @@
 import { ChartConfig } from "@/components/ui/chart";
+import { BaseModal } from "./BaseModal";
 
-export interface Kpi {
-  name: string;
-  descrioption: string;
+export interface Kpi extends BaseModal {
   businessQuestions: string[];
   // metrics: MetricType;
-  visuals: {
-    type: "BarChart" | "BarChartHorizontal" | "LineChart" | "PieChart";
-    chartConfig: ChartConfig;
-    dataKeys: string[];
-  }[];
+  visuals: VisualChart[];
   chartData: any; // eslint-disable-line
 }
+
+export interface VisualChart {
+  type: ChartType;
+  chartConfig: ChartConfig;
+  dataKeys: string[];
+}
+
+type ChartType = "BarChart" | "BarChartHorizontal" | "LineChart" | "PieChart";

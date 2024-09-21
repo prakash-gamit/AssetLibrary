@@ -23,7 +23,7 @@ export const MonthlyVisitorsBrowser: Kpi = {
       chartConfig: {
         browser: {
           label: "Browser",
-          // color: "hsl(var(--chart-1))",
+          color: "hsl(var(--chart-1))",
         },
       } satisfies ChartConfig,
       dataKeys: ["browser", "visitors"],
