@@ -6,7 +6,7 @@ export interface Kpi {
   businessQuestions: string[];
   // metrics: MetricType;
   visuals: {
-    type: "BarChart" | "BarChartHorizontal" | "LineChart";
+    type: "BarChart" | "BarChartHorizontal" | "LineChart" | "PieChart";
     chartConfig: ChartConfig;
     dataKeys: string[];
   }[];

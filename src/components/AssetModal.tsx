@@ -15,6 +15,7 @@ import { Kpi } from "@/entities/Kpi";
 import { BarChartViz } from "@/charts/BarChartViz";
 import { BarChartHorizontalViz } from "@/charts/BarCharHorizontalViz";
 import { LineChartViz } from "@/charts/LineChartViz";
+import { PieChartViz } from "@/charts/PieChartViz";
 
 export interface AssetModalProps {
   type: "KPI" | "LAYOUT";
@@ -66,6 +67,14 @@ export const AssetModal = ({ type, kpi }: AssetModalProps) => {
 
                 {v.type === "LineChart" && (
                   <LineChartViz
+                    chartData={kpi.chartData}
+                    chartConfig={kpi.visuals[i].chartConfig}
+                    dataKeys={kpi.visuals[i].dataKeys}
+                  />
+                )}
+
+                {v.type === "PieChart" && (
+                  <PieChartViz
                     chartData={kpi.chartData}
                     chartConfig={kpi.visuals[i].chartConfig}
                     dataKeys={kpi.visuals[i].dataKeys}
