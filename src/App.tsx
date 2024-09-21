@@ -1,35 +1,51 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { AssetCard } from "@/components/AssetCard";
+import { AssetModal } from "@/components/AssetModal";
+import { SectionDescription } from "@/components/SectionDescription";
+import { SectionTitle } from "@/components/SectionTitle";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { MonthlyDesktopVisitors } from "@/data/MonthlyDesktopVisitors";
+import { MonthlyMobileVisitors } from "@/data/MonthlyMobileVisitors";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <main className="max-w-3xl mx-auto py-8">
+      <div className="flex justify-center text-5xl font-bold">Library</div>
+      <div className="flex justify-center text-xl mb-12 mt-4">
+        Browse for assets needed to report and present analysis.
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      <Tabs defaultValue="featured" className="w-full">
+        <TabsList className="grid grid-cols-4">
+          <TabsTrigger value="featured">Featured</TabsTrigger>
+          <TabsTrigger value="kpi">KPI</TabsTrigger>
+          <TabsTrigger value="layouts">Layouts</TabsTrigger>
+          <TabsTrigger value="storyboards">Storyboards</TabsTrigger>
+        </TabsList>
+        <TabsContent value="featured">
+          <SectionTitle title="Featured" className="mt-8" />
+          <SectionDescription
+            description="Curated top picks from this week"
+            className="mb-8"
+          />
+          <div className="grid grid-cols-2 gap-8">
+            {/* <AssetModal /> */}
+            <AssetCard
+              title="Daily visitors"
+              description="Daily number of desktop and mobile users"
+            />
+            <AssetCard
+              title="Advertisement spends"
+              description="Monthly advertisement spend on different platforms"
+            />
+          </div>
+        </TabsContent>
+        <TabsContent value="kpi" className="grid grid-cols-2 gap-8">
+          {[MonthlyDesktopVisitors, MonthlyMobileVisitors].map((m) => {
+            return <AssetModal key={m.name} type="KPI" kpi={m} />;
+          })}
+        </TabsContent>
+      </Tabs>
+    </main>
+  );
 }
 
-export default App
+export default App;
