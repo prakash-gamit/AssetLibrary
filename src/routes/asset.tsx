@@ -2,6 +2,8 @@ import { BarChartHorizontalViz } from "@/charts/BarCharHorizontalViz";
 import { BarChartViz } from "@/charts/BarChartViz";
 import { LineChartViz } from "@/charts/LineChartViz";
 import { PieChartViz } from "@/charts/PieChartViz";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -9,14 +11,12 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
+import { kpisList } from "@/data/kpis";
 import { Kpi, VisualChart } from "@/entities/Kpi";
 import { Layout } from "@/entities/Layout";
 import { Bookmark, Grid3X3, Link2 } from "lucide-react";
-import { AssetCard } from "./AssetCard";
-import { Badge } from "./ui/badge";
-import { Button } from "./ui/button";
+import { Params, useLoaderData, useNavigate } from "react-router-dom";
 
 type AssetModalProps = {
   type: "KPI" | "LAYOUT";
@@ -24,7 +24,19 @@ type AssetModalProps = {
   layout?: Layout;
 };
 
-export const AssetModal = ({ type, kpi, layout }: AssetModalProps) => {
+export async function assetLoader({ params }: { params: Params<"assetId"> }) {
+  console.log("params", params);
+  return {
+    kpi: kpisList.filter(
+      (k) => k.name.toLocaleLowerCase() === params?.assetId?.toLocaleLowerCase()
+    )?.[0],
+  };
+}
+
+export default function AssetRoute({ type, layout }: AssetModalProps) {
+  const { kpi } = useLoaderData() as { kpi: Kpi };
+  const navigate = useNavigate();
+
   let questions: string[] = [];
   let visuals: VisualChart[] = [];
   if (kpi) {
@@ -40,15 +52,14 @@ export const AssetModal = ({ type, kpi, layout }: AssetModalProps) => {
       return [...acc, v.kpi.visuals[v.kpiChartIndex]];
     }, []);
   }
-
   return (
-    <Dialog>
-      <DialogTrigger>
-        <AssetCard
-          title={kpi?.name ?? layout?.name ?? ""}
-          description={kpi?.descrioption ?? layout?.descrioption ?? ""}
-        />
-      </DialogTrigger>
+    <Dialog
+      open
+      onOpenChange={() => {
+        console.log("here");
+        navigate("/");
+      }}
+    >
       <DialogContent className="max-w-3xl max-h-screen overflow-scroll">
         <Link2 className="absolute w-4 right-10 top-3 cursor-pointer -rotate-45" />
         <DialogHeader className="items-center">
@@ -114,7 +125,7 @@ export const AssetModal = ({ type, kpi, layout }: AssetModalProps) => {
           const kpi = v.kpi;
 
           return (
-            <div>
+            <div key={v.kpiChartIndex}>
               {type === "BarChart" && (
                 <BarChartViz
                   chartData={kpi.chartData}
@@ -157,7 +168,7 @@ export const AssetModal = ({ type, kpi, layout }: AssetModalProps) => {
             </div>
             <div className="grid grid-cols-2 gap-4">
               {questions.map((q, i) => {
-                return <BusinessQuestion q={q} i={i + 1} />;
+                return <BusinessQuestion q={q} i={i + 1} key={q} />;
               })}
             </div>
           </div>
@@ -171,7 +182,7 @@ export const AssetModal = ({ type, kpi, layout }: AssetModalProps) => {
       </DialogContent>
     </Dialog>
   );
-};
+}
 
 const BusinessQuestion = ({ q, i }: { q: string; i: number }) => {
   return (

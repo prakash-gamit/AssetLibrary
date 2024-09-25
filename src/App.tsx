@@ -1,21 +1,12 @@
 import { AssetCard } from "@/components/AssetCard";
-import { AssetModal } from "@/components/AssetModal";
 import { SectionDescription } from "@/components/SectionDescription";
 import { SectionTitle } from "@/components/SectionTitle";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MonthlyDesktopVisitors } from "@/data/MonthlyDesktopVisitorsKpi";
-import { MonthlyMobileVisitors } from "@/data/MonthlyMobileVisitorsKpi";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { MonthlyVisitorsBrowser } from "./data/MonthlyVisitorsBrowserKpi";
+import { Link } from "react-router-dom";
 import { VisitorsLayout } from "./data/VisitorsLayout";
+import { kpisList } from "./data/kpis";
 
 function App() {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const onOpenChange = () => {
-    navigate("/");
-  };
-
   return (
     <main className="max-w-3xl mx-auto py-8">
       <div className="flex justify-center text-5xl font-bold">Library</div>
@@ -48,35 +39,21 @@ function App() {
           </div>
         </TabsContent>
         <TabsContent value="kpi" className="grid grid-cols-2 gap-8">
-          {[
-            MonthlyDesktopVisitors,
-            MonthlyMobileVisitors,
-            MonthlyVisitorsBrowser,
-          ].map((m) => {
-            const assetRoute = `/${m.name.toLocaleLowerCase()}`;
+          {kpisList.map((m) => {
+            const assetRoute = `asset/${m.name.toLocaleLowerCase()}`;
             return (
               <Link to={assetRoute} key={assetRoute} className="w-full">
-                <AssetModal
-                  type="KPI"
-                  kpi={m}
-                  open={location.pathname.toLocaleLowerCase() === assetRoute}
-                  onOpenChange={onOpenChange}
-                />
+                <AssetCard title={m.name} description={m.descrioption} />
               </Link>
             );
           })}
         </TabsContent>
         <TabsContent value="layouts" className="grid grid-cols-2 gap-8">
           {[VisitorsLayout].map((l) => {
-            const assetRoute = `/${l.name.toLocaleLowerCase()}`;
+            const assetRoute = `asset/${l.name.toLocaleLowerCase()}`;
             return (
               <Link to={assetRoute} key={assetRoute}>
-                <AssetModal
-                  type="LAYOUT"
-                  layout={l}
-                  open={location.pathname.toLocaleLowerCase() === assetRoute}
-                  onOpenChange={onOpenChange}
-                />
+                <AssetCard title={l.name} description={l.descrioption} />
               </Link>
             );
           })}
