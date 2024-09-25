@@ -14,7 +14,7 @@ export interface AssetCardProps {
 
 export const AssetCard = ({ title, description }: AssetCardProps) => {
   return (
-    <Card className="text-start">
+    <Card className="text-start w-full">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>

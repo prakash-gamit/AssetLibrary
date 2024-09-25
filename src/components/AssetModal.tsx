@@ -1,3 +1,7 @@
+import { BarChartHorizontalViz } from "@/charts/BarCharHorizontalViz";
+import { BarChartViz } from "@/charts/BarChartViz";
+import { LineChartViz } from "@/charts/LineChartViz";
+import { PieChartViz } from "@/charts/PieChartViz";
 import {
   Dialog,
   DialogContent,
@@ -7,24 +11,28 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { AssetCard } from "./AssetCard";
+import { Kpi, VisualChart } from "@/entities/Kpi";
+import { Layout } from "@/entities/Layout";
 import { Bookmark, Grid3X3, Link2 } from "lucide-react";
+import { AssetCard } from "./AssetCard";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
-import { Kpi, VisualChart } from "@/entities/Kpi";
-import { BarChartViz } from "@/charts/BarChartViz";
-import { BarChartHorizontalViz } from "@/charts/BarCharHorizontalViz";
-import { LineChartViz } from "@/charts/LineChartViz";
-import { PieChartViz } from "@/charts/PieChartViz";
-import { Layout } from "@/entities/Layout";
 
 type AssetModalProps = {
   type: "KPI" | "LAYOUT";
   kpi?: Kpi;
   layout?: Layout;
+  open?: boolean;
+  onOpenChange: (b: boolean) => void;
 };
 
-export const AssetModal = ({ type, kpi, layout }: AssetModalProps) => {
+export const AssetModal = ({
+  type,
+  kpi,
+  layout,
+  open = false,
+  onOpenChange,
+}: AssetModalProps) => {
   let questions: string[] = [];
   let visuals: VisualChart[] = [];
   if (kpi) {
@@ -42,7 +50,7 @@ export const AssetModal = ({ type, kpi, layout }: AssetModalProps) => {
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger>
         <AssetCard
           title={kpi?.name ?? layout?.name ?? ""}

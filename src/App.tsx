@@ -5,10 +5,17 @@ import { SectionTitle } from "@/components/SectionTitle";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MonthlyDesktopVisitors } from "@/data/MonthlyDesktopVisitorsKpi";
 import { MonthlyMobileVisitors } from "@/data/MonthlyMobileVisitorsKpi";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MonthlyVisitorsBrowser } from "./data/MonthlyVisitorsBrowserKpi";
 import { VisitorsLayout } from "./data/VisitorsLayout";
 
 function App() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const onOpenChange = () => {
+    navigate("/");
+  };
+
   return (
     <main className="max-w-3xl mx-auto py-8">
       <div className="flex justify-center text-5xl font-bold">Library</div>
@@ -46,12 +53,32 @@ function App() {
             MonthlyMobileVisitors,
             MonthlyVisitorsBrowser,
           ].map((m) => {
-            return <AssetModal type="KPI" kpi={m} />;
+            const assetRoute = `/${m.name.toLocaleLowerCase()}`;
+            return (
+              <Link to={assetRoute} key={assetRoute} className="w-full">
+                <AssetModal
+                  type="KPI"
+                  kpi={m}
+                  open={location.pathname.toLocaleLowerCase() === assetRoute}
+                  onOpenChange={onOpenChange}
+                />
+              </Link>
+            );
           })}
         </TabsContent>
         <TabsContent value="layouts" className="grid grid-cols-2 gap-8">
           {[VisitorsLayout].map((l) => {
-            return <AssetModal type="LAYOUT" layout={l} />;
+            const assetRoute = `/${l.name.toLocaleLowerCase()}`;
+            return (
+              <Link to={assetRoute} key={assetRoute}>
+                <AssetModal
+                  type="LAYOUT"
+                  layout={l}
+                  open={location.pathname.toLocaleLowerCase() === assetRoute}
+                  onOpenChange={onOpenChange}
+                />
+              </Link>
+            );
           })}
         </TabsContent>
       </Tabs>

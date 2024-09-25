@@ -1,4 +1,4 @@
-import { useRouteError } from "react-router-dom";
+import { Link, useRouteError } from "react-router-dom";
 
 export default function ErrorPage() {
   const error: any = useRouteError(); // eslint-disable-line
@@ -8,10 +8,13 @@ export default function ErrorPage() {
       id="error-page"
       className="h-screen w-screen flex flex-col justify-center items-center"
     >
-      <h1>Oops!</h1>
+      <h1 className="font-bold text-2xl">Oops!</h1>
       <p>Sorry, an unexpected error has occurred.</p>
       <p>
-        <i>{error.statusText || error.message}</i>
+        <em>{error.statusText || error.message}</em>
+      </p>
+      <p>
+        <Link to="/">Go Home</Link>
       </p>
     </div>
   );
