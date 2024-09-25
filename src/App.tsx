@@ -3,8 +3,7 @@ import { SectionDescription } from "@/components/SectionDescription";
 import { SectionTitle } from "@/components/SectionTitle";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link } from "react-router-dom";
-import { VisitorsLayout } from "./data/VisitorsLayout";
-import { kpisList } from "./data/kpis";
+import { kpisList, layoutsList } from "./data/data";
 
 function App() {
   return (
@@ -49,7 +48,7 @@ function App() {
           })}
         </TabsContent>
         <TabsContent value="layouts" className="grid grid-cols-2 gap-8">
-          {[VisitorsLayout].map((l) => {
+          {layoutsList.map((l) => {
             const assetRoute = `asset/${l.name.toLocaleLowerCase()}`;
             return (
               <Link to={assetRoute} key={assetRoute}>

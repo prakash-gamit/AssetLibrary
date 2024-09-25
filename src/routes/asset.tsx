@@ -12,7 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { kpisList } from "@/data/kpis";
+import { kpisList, layoutsList } from "@/data/data";
 import { Kpi, VisualChart } from "@/entities/Kpi";
 import { Layout } from "@/entities/Layout";
 import { Bookmark, Grid3X3, Link2 } from "lucide-react";
@@ -20,21 +20,21 @@ import { Params, useLoaderData, useNavigate } from "react-router-dom";
 
 type AssetModalProps = {
   type: "KPI" | "LAYOUT";
-  kpi?: Kpi;
-  layout?: Layout;
 };
 
 export async function assetLoader({ params }: { params: Params<"assetId"> }) {
-  console.log("params", params);
   return {
     kpi: kpisList.filter(
       (k) => k.name.toLocaleLowerCase() === params?.assetId?.toLocaleLowerCase()
     )?.[0],
+    layout: layoutsList.filter(
+      (l) => l.name.toLocaleLowerCase() === params?.assetId?.toLocaleLowerCase()
+    )?.[0],
   };
 }
 
-export default function AssetRoute({ type, layout }: AssetModalProps) {
-  const { kpi } = useLoaderData() as { kpi: Kpi };
+export default function AssetRoute({ type }: AssetModalProps) {
+  const { kpi, layout } = useLoaderData() as { kpi: Kpi; layout: Layout };
   const navigate = useNavigate();
 
   let questions: string[] = [];
@@ -56,7 +56,6 @@ export default function AssetRoute({ type, layout }: AssetModalProps) {
     <Dialog
       open
       onOpenChange={() => {
-        console.log("here");
         navigate("/");
       }}
     >
