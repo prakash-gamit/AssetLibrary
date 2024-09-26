@@ -1,4 +1,6 @@
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import CustomTabTrigger from "@/components/CustomTabTrigger";
+import { Tabs, TabsList } from "@/components/ui/tabs";
+import { Outlet } from "react-router-dom";
 
 export default function Root() {
   return (
@@ -9,11 +11,21 @@ export default function Root() {
       </div>
       <Tabs defaultValue="featured" className="w-full">
         <TabsList className="grid grid-cols-4">
-          <TabsTrigger value="featured">Featured</TabsTrigger>
-          <TabsTrigger value="kpi">KPI</TabsTrigger>
-          <TabsTrigger value="layouts">Layouts</TabsTrigger>
-          <TabsTrigger value="storyboards">Storyboards</TabsTrigger>
+          <CustomTabTrigger to="/" value="featured">
+            Featured
+          </CustomTabTrigger>
+          <CustomTabTrigger to="/kpi" value="kpi">
+            KPI
+          </CustomTabTrigger>
+          <CustomTabTrigger to="/layouts" value="layouts">
+            Layouts
+          </CustomTabTrigger>
+          <CustomTabTrigger to="/storyboards" value="storyboards">
+            Storyboards
+          </CustomTabTrigger>
         </TabsList>
+
+        <Outlet />
       </Tabs>
     </main>
   );

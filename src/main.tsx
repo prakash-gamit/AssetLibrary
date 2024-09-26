@@ -5,12 +5,34 @@ import ErrorPage from "./error-page.tsx";
 import "./index.css";
 import AssetRoute, { assetLoader } from "./routes/asset.tsx";
 import Root from "./routes/root.tsx";
+import KpiRoute from "./routes/kpi.tsx";
+import LayoutsRoute from "./routes/layouts.tsx";
+import StoryboardsRoute from "./routes/storyboards.tsx";
+import HomeRoute from "./routes/home.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
     errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "",
+        element: <HomeRoute />,
+      },
+      {
+        path: "kpi",
+        element: <KpiRoute />,
+      },
+      {
+        path: "layouts",
+        element: <LayoutsRoute />,
+      },
+      {
+        path: "storyboards",
+        element: <StoryboardsRoute />,
+      },
+    ],
   },
   {
     path: "asset/:assetId",

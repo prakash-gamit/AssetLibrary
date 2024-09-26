@@ -56,7 +56,7 @@ export default function AssetRoute({ type }: AssetModalProps) {
     <Dialog
       open
       onOpenChange={() => {
-        navigate("/");
+        navigate(-1);
       }}
     >
       <DialogContent className="max-w-3xl max-h-screen overflow-scroll">
