@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface FavouritesState {
   favourites: string[];
@@ -6,36 +7,48 @@ interface FavouritesState {
   removeFromFavourites: (assetId: string) => void;
 }
 
-const useFavourites = create<FavouritesState>((set) => {
-  return {
-    favourites: [],
+const useFavourites = create<
+  FavouritesState,
+  [["zustand/persist", FavouritesState]]
+>(
+  persist(
+    (set, get) => {
+      return {
+        favourites: [],
 
-    addToFavourites: (assetId) =>
-      set((state) => {
-        if (!state.favourites.includes(assetId)) {
-          return {
-            ...state,
-            favourites: [...state.favourites, assetId],
-          };
-        }
+        addToFavourites: (assetId) =>
+          set((state) => {
+            const favourites = get().favourites;
+            if (!favourites.includes(assetId)) {
+              return {
+                ...state,
+                favourites: [...favourites, assetId],
+              };
+            }
 
-        return state;
-      }),
+            return state;
+          }),
 
-    removeFromFavourites: (assetId) =>
-      set((state) => {
-        if (!state.favourites.includes(assetId)) return state;
+        removeFromFavourites: (assetId) =>
+          set((state) => {
+            const favourites = get().favourites;
+            if (!favourites.includes(assetId)) return state;
 
-        const index = state.favourites.findIndex((f) => f === assetId);
-        return {
-          ...state,
-          favourites: [
-            ...state.favourites.slice(0, index),
-            ...state.favourites.slice(index + 1),
-          ],
-        };
-      }),
-  };
-});
+            const index = favourites.findIndex((f) => f === assetId);
+            return {
+              ...state,
+              favourites: [
+                ...favourites.slice(0, index),
+                ...favourites.slice(index + 1),
+              ],
+            };
+          }),
+      };
+    },
+    {
+      name: "favourite-assets",
+    }
+  )
+);
 
 export default useFavourites;
