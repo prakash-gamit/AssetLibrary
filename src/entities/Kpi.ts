@@ -3,7 +3,6 @@ import { BaseModal } from "./BaseModal";
 
 export interface Kpi extends BaseModal {
   businessQuestions: string[];
-  // metrics: MetricType;
   visuals: VisualChart[];
   chartData: any; // eslint-disable-line
 }

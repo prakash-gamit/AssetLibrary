@@ -9,6 +9,7 @@ import KpiRoute from "./routes/kpi.tsx";
 import LayoutsRoute from "./routes/layouts.tsx";
 import StoryboardsRoute from "./routes/storyboards.tsx";
 import HomeRoute from "./routes/home.tsx";
+import { Toaster } from "./components/ui/toaster.tsx";
 
 const router = createBrowserRouter([
   {
@@ -44,5 +45,6 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <RouterProvider router={router} />
+    <Toaster />
   </StrictMode>
 );

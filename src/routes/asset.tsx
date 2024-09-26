@@ -15,6 +15,8 @@ import {
 import { kpisList, layoutsList } from "@/data/data";
 import { Kpi, VisualChart } from "@/entities/Kpi";
 import { Layout } from "@/entities/Layout";
+import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 import { Bookmark, Grid3X3, Link2 } from "lucide-react";
 import { Params, useLoaderData, useNavigate } from "react-router-dom";
 
@@ -36,6 +38,7 @@ export async function assetLoader({ params }: { params: Params<"assetId"> }) {
 export default function AssetRoute({ type }: AssetModalProps) {
   const { kpi, layout } = useLoaderData() as { kpi: Kpi; layout: Layout };
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   let questions: string[] = [];
   let visuals: VisualChart[] = [];
@@ -64,6 +67,12 @@ export default function AssetRoute({ type }: AssetModalProps) {
           className="absolute w-4 right-10 top-3 cursor-pointer -rotate-45"
           onClick={() => {
             window.navigator.clipboard.writeText(window.location.href);
+            toast({
+              className: cn(
+                "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"
+              ),
+              description: "Asset link copied to clipboard.",
+            });
           }}
         />
         <DialogHeader className="items-center">
