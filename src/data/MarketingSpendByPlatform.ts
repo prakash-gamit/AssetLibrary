@@ -5,6 +5,7 @@ export const MarketingSpendByPlatform: Kpi = {
   name: "MSP",
   descrioption: "Marketing spend on each platform",
   modalType: "KPI",
+  userHasAccess: true,
   businessQuestions: [
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu eros non arcu scelerisque malesuada.",
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu eros non arcu scelerisque malesuada.",

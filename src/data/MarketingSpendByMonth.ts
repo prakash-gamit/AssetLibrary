@@ -5,6 +5,7 @@ export const MarketingSpendByMonth: Kpi = {
   name: "MSM",
   descrioption: "Marketing spend by month",
   modalType: "KPI",
+  userHasAccess: true,
   businessQuestions: [
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu eros non arcu scelerisque malesuada.",
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu eros non arcu scelerisque malesuada.",
