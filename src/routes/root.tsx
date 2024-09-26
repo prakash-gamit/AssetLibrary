@@ -23,7 +23,7 @@ export default function Root() {
         defaultValue="/"
         className="w-full"
       >
-        <TabsList className="grid grid-cols-4">
+        <TabsList className="grid grid-cols-4 mb-6">
           <CustomTabTrigger to="/" value="/">
             Featured
           </CustomTabTrigger>
