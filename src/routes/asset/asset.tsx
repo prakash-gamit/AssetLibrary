@@ -53,7 +53,7 @@ export default function AssetRoute() {
   const { toast } = useToast();
   const { favourites, addToFavourites, removeFromFavourites } = useFavourites();
 
-  let id: string;
+  let id: string = "";
   let questions: string[] = [];
   let visuals: VisualChart[] = [];
   let isFavourite = false;
@@ -234,7 +234,7 @@ export default function AssetRoute() {
 
         {!userHasAccess && (
           <div className="flex justify-center my-8">
-            <RequestAccess />
+            <RequestAccess assetId={id} />
           </div>
         )}
 
