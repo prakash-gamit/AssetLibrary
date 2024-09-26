@@ -9,9 +9,9 @@ import {
   CommandSeparator,
 } from "@/components/ui/command";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { kpisList, layoutsList } from "./data/data";
 import useRecentSearches from "./store/useRecentSearches";
-import { useNavigate } from "react-router-dom";
 
 export default function Search() {
   const navigate = useNavigate();
@@ -40,15 +40,17 @@ export default function Search() {
         <CommandList>
           {searchText && <CommandEmpty>No results found.</CommandEmpty>}
 
-          <CommandGroup heading="Recent searches">
-            {[...searches].map((s) => {
-              return (
-                <CommandItem key={s} onSelect={() => setSearchText(s)}>
-                  {s}
-                </CommandItem>
-              );
-            })}
-          </CommandGroup>
+          {searches.size > 0 && (
+            <CommandGroup heading="Recent searches">
+              {[...searches].map((s) => {
+                return (
+                  <CommandItem key={s} onSelect={() => setSearchText(s)}>
+                    {s}
+                  </CommandItem>
+                );
+              })}
+            </CommandGroup>
+          )}
 
           <CommandSeparator />
 
