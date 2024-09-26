@@ -60,7 +60,12 @@ export default function AssetRoute({ type }: AssetModalProps) {
       }}
     >
       <DialogContent className="max-w-3xl max-h-screen overflow-scroll">
-        <Link2 className="absolute w-4 right-10 top-3 cursor-pointer -rotate-45" />
+        <Link2
+          className="absolute w-4 right-10 top-3 cursor-pointer -rotate-45"
+          onClick={() => {
+            window.navigator.clipboard.writeText(window.location.href);
+          }}
+        />
         <DialogHeader className="items-center">
           <div className="p-2 bg-gray-100 w-fit rounded-lg mb-2">
             <Grid3X3 />
