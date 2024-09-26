@@ -1,5 +1,6 @@
 import CustomTabTrigger from "@/components/CustomTabTrigger";
 import { Tabs, TabsList } from "@/components/ui/tabs";
+import Search from "@/Search";
 import { Outlet } from "react-router-dom";
 
 export default function Root() {
@@ -9,6 +10,9 @@ export default function Root() {
       <div className="flex justify-center text-xl mb-12 mt-4">
         Browse for assets needed to report and present analysis.
       </div>
+
+      <Search />
+
       <Tabs defaultValue="featured" className="w-full">
         <TabsList className="grid grid-cols-4">
           <CustomTabTrigger to="/" value="featured">
