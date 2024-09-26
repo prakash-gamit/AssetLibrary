@@ -17,6 +17,7 @@ import { Kpi, VisualChart } from "@/entities/Kpi";
 import { Layout } from "@/entities/Layout";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import useFavourites from "@/store/useFavourites";
 import { Bookmark, Grid3X3, Link2 } from "lucide-react";
 import { Params, useLoaderData, useNavigate } from "react-router-dom";
 
@@ -39,6 +40,7 @@ export default function AssetRoute({ type }: AssetModalProps) {
   const { kpi, layout } = useLoaderData() as { kpi: Kpi; layout: Layout };
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { favourites, addToFavourites, removeFromFavourites } = useFavourites();
 
   let questions: string[] = [];
   let visuals: VisualChart[] = [];
@@ -187,9 +189,21 @@ export default function AssetRoute({ type }: AssetModalProps) {
           </div>
         )}
         <DialogFooter>
-          <Button className="w-full font-semibold">
-            <Bookmark className="mr-2" />
-            Favourite
+          <Button
+            className="w-full font-semibold"
+            onClick={() => {
+              if (favourites.includes(kpi.name)) removeFromFavourites(kpi.name);
+              else addToFavourites(kpi.name);
+            }}
+          >
+            <Bookmark
+              className="mr-2"
+              fill={favourites.includes(kpi.name) ? "white" : "transparent"}
+            />
+
+            {favourites.includes(kpi.name)
+              ? "Remove from favourites"
+              : "Add to favourites"}
           </Button>
         </DialogFooter>
       </DialogContent>
