@@ -42,20 +42,26 @@ export default function AssetRoute({ type }: AssetModalProps) {
   const { toast } = useToast();
   const { favourites, addToFavourites, removeFromFavourites } = useFavourites();
 
+  let id: string;
   let questions: string[] = [];
   let visuals: VisualChart[] = [];
+  let isFavourite = false;
   if (kpi) {
+    id = kpi.name;
     questions = kpi.businessQuestions;
     visuals = kpi.visuals;
+    isFavourite = favourites.includes(kpi.name);
   }
 
   if (layout) {
+    id = layout.name;
     // questions = layout.visuals.reduce((acc: string[], l) => {
     //   return [...acc, ...l.kpi.businessQuestions];
     // }, []);
     visuals = layout.visuals.reduce((acc: VisualChart[], v) => {
       return [...acc, v.kpi.visuals[v.kpiChartIndex]];
     }, []);
+    isFavourite = favourites.includes(layout.name);
   }
   return (
     <Dialog
@@ -192,18 +198,16 @@ export default function AssetRoute({ type }: AssetModalProps) {
           <Button
             className="w-full font-semibold"
             onClick={() => {
-              if (favourites.includes(kpi.name)) removeFromFavourites(kpi.name);
-              else addToFavourites(kpi.name);
+              if (isFavourite) removeFromFavourites(id);
+              else addToFavourites(id);
             }}
           >
             <Bookmark
               className="mr-2"
-              fill={favourites.includes(kpi.name) ? "white" : "transparent"}
+              fill={isFavourite ? "white" : "transparent"}
             />
 
-            {favourites.includes(kpi.name)
-              ? "Remove from favourites"
-              : "Add to favourites"}
+            {isFavourite ? "Remove from favourites" : "Add to favourites"}
           </Button>
         </DialogFooter>
       </DialogContent>

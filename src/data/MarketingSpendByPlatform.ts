@@ -1,9 +1,9 @@
 import { ChartConfig } from "@/components/ui/chart";
 import { Kpi } from "@/entities/Kpi";
 
-export const MonthlyVisitorsBrowser: Kpi = {
-  name: "MVB",
-  descrioption: "Monthly website visitors by browser",
+export const MarketingSpendByPlatform: Kpi = {
+  name: "MSP",
+  descrioption: "Marketing spend on each platform",
   businessQuestions: [
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu eros non arcu scelerisque malesuada.",
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu eros non arcu scelerisque malesuada.",
@@ -11,51 +11,51 @@ export const MonthlyVisitorsBrowser: Kpi = {
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu eros non arcu scelerisque malesuada.",
   ],
   chartData: [
-    { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-    { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-    { browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
-    { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-    { browser: "other", visitors: 90, fill: "var(--color-other)" },
+    { platform: "facebook", spend: 2750, fill: "var(--color-facebook)" },
+    { platform: "google", spend: 2000, fill: "var(--color-google)" },
+    { platform: "twitter", spend: 1870, fill: "var(--color-twitter)" },
+    { platform: "youtube", spend: 1730, fill: "var(--color-youtube)" },
+    { platform: "instagram", spend: 900, fill: "var(--color-instagram)" },
   ],
   visuals: [
     {
       type: "BarChart",
       chartConfig: {
-        browser: {
-          label: "browser",
+        platform: {
+          label: "platform",
           color: "hsl(var(--chart-1))",
         },
       } satisfies ChartConfig,
-      dataKeys: ["browser", "visitors"],
+      dataKeys: ["platform", "spend"],
     },
     {
       type: "PieChart",
       chartConfig: {
-        visitors: {
-          label: "Visitors",
+        spend: {
+          label: "spend",
         },
-        chrome: {
-          label: "Chrome",
+        facebook: {
+          label: "Facebook",
           color: "hsl(var(--chart-1))",
         },
-        safari: {
-          label: "Safari",
+        google: {
+          label: "Google",
           color: "hsl(var(--chart-2))",
         },
-        firefox: {
-          label: "Firefox",
+        twitter: {
+          label: "Twitter",
           color: "hsl(var(--chart-3))",
         },
-        edge: {
-          label: "Edge",
+        youtube: {
+          label: "Youtube",
           color: "hsl(var(--chart-4))",
         },
-        other: {
-          label: "Other",
+        instagram: {
+          label: "Instagram",
           color: "hsl(var(--chart-5))",
         },
       },
-      dataKeys: ["browser", "visitors"],
+      dataKeys: ["platform", "spend"],
     },
   ],
 };
