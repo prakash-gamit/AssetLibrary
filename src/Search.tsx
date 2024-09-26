@@ -40,9 +40,21 @@ export default function Search() {
         <CommandList>
           {searchText && <CommandEmpty>No results found.</CommandEmpty>}
 
-          <CommandGroup heading="Search results">
-            {searchText &&
-              [...kpisList, ...layoutsList]
+          <CommandGroup heading="Recent searches">
+            {[...searches].map((s) => {
+              return (
+                <CommandItem key={s} onSelect={() => setSearchText(s)}>
+                  {s}
+                </CommandItem>
+              );
+            })}
+          </CommandGroup>
+
+          <CommandSeparator />
+
+          {searchText && (
+            <CommandGroup heading="Search results">
+              {[...kpisList, ...layoutsList]
                 .filter((asset) => {
                   return (
                     asset.name
@@ -63,22 +75,12 @@ export default function Search() {
                         navigate(assetRoute);
                       }}
                     >
-                      {asset.descrioption}
+                      {`${asset.name}: ${asset.descrioption}: ${asset.modalType}`}
                     </CommandItem>
                   );
                 })}
-          </CommandGroup>
-
-          <CommandGroup heading="Recent searches">
-            {[...searches].map((s) => {
-              return (
-                <CommandItem key={s} onSelect={() => setSearchText(s)}>
-                  {s}
-                </CommandItem>
-              );
-            })}
-          </CommandGroup>
-          <CommandSeparator />
+            </CommandGroup>
+          )}
         </CommandList>
       </CommandDialog>
     </div>
