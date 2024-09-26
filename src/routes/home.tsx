@@ -42,6 +42,10 @@ export default function HomeRoute() {
             </Link>
           );
         })}
+
+        {favourites.length === 0 && (
+          <div className="text-gray-400">You have no favourites</div>
+        )}
       </div>
     </TabsContent>
   );

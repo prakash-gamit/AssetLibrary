@@ -9,9 +9,16 @@ import {
   CommandSeparator,
 } from "@/components/ui/command";
 import { useState } from "react";
+import { kpisList, layoutsList } from "./data/data";
+import useRecentSearches from "./store/useRecentSearches";
+import { useNavigate } from "react-router-dom";
 
 export default function Search() {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const { searches, add } = useRecentSearches();
+  const [searchText, setSearchText] = useState("");
+  const sanitizedSearchText = searchText.toLocaleLowerCase();
 
   return (
     <div className="mb-4">
@@ -23,13 +30,53 @@ export default function Search() {
       </Command>
 
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="Type to search assets..." />
+        <CommandInput
+          placeholder="Type to search assets..."
+          value={searchText}
+          onChangeCapture={(e) => {
+            setSearchText(e.currentTarget.value);
+          }}
+        />
         <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
+          {searchText && <CommandEmpty>No results found.</CommandEmpty>}
+
+          <CommandGroup heading="Search results">
+            {searchText &&
+              [...kpisList, ...layoutsList]
+                .filter((asset) => {
+                  return (
+                    asset.name
+                      .toLocaleLowerCase()
+                      .includes(sanitizedSearchText) ||
+                    asset.descrioption
+                      .toLocaleLowerCase()
+                      .includes(sanitizedSearchText)
+                  );
+                })
+                .map((asset) => {
+                  return (
+                    <CommandItem
+                      key={asset.name}
+                      onSelect={() => {
+                        add(searchText);
+                        const assetRoute = `/asset/${asset.name}`;
+                        navigate(assetRoute);
+                      }}
+                    >
+                      {asset.descrioption}
+                    </CommandItem>
+                  );
+                })}
+          </CommandGroup>
+
           <CommandGroup heading="Recent searches">
-            <CommandItem>Calendar</CommandItem>
-            <CommandItem>Search Emoji</CommandItem>
-            <CommandItem>Calculator</CommandItem>
+            {[...searches].map((s) => {
+              return (
+                <CommandItem key={s} onSelect={() => setSearchText(s)}>
+                  {s}
+                </CommandItem>
+              );
+            })}
           </CommandGroup>
           <CommandSeparator />
         </CommandList>
