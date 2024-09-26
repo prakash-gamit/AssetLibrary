@@ -40,15 +40,18 @@ export default function Search() {
         <CommandList>
           {searchText && <CommandEmpty>No results found.</CommandEmpty>}
 
-          {searches.size > 0 && (
+          {searches.length > 0 && (
             <CommandGroup heading="Recent searches">
-              {[...searches].map((s) => {
-                return (
-                  <CommandItem key={s} onSelect={() => setSearchText(s)}>
-                    {s}
-                  </CommandItem>
-                );
-              })}
+              {searches
+                .slice(Math.max(searches.length - 5, 0))
+                .reverse()
+                .map((s) => {
+                  return (
+                    <CommandItem key={s} onSelect={() => setSearchText(s)}>
+                      {s}
+                    </CommandItem>
+                  );
+                })}
             </CommandGroup>
           )}
 

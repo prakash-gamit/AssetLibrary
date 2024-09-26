@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface RecentSearches {
-  searches: Set<string>;
+  searches: string[];
   add: (s: string) => void;
 }
 
@@ -13,16 +13,15 @@ const useRecentSearches = create<
   persist(
     (set, get) => {
       return {
-        searches: new Set(),
+        searches: [],
         add: (s) =>
           set((state) => {
-            const newSearches = new Set(get().searches);
-            newSearches.add(s);
-            return {
-              ...state,
-              // searches: newSearches.slice(newSearches.length - 5),
-              searches: newSearches,
-            };
+            const searches = get().searches;
+            if (!searches.includes(s)) {
+              return { ...state, searches: [...searches, s] };
+            }
+
+            return state;
           }),
       };
     },

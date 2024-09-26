@@ -88,8 +88,6 @@ export default function AssetRoute() {
     layout = storyboard.layout;
   }
 
-  console.log(layout);
-
   return (
     <Dialog
       open
