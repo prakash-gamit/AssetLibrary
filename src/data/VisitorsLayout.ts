@@ -6,6 +6,7 @@ import { MonthlyVisitorsBrowser } from "./MonthlyVisitorsBrowserKpi";
 export const VisitorsLayout: Layout = {
   name: "VL",
   descrioption: "Website visitors by desktop/mobile/browser",
+  modalType: "LAYOUT",
   visuals: [
     {
       kpi: MonthlyDesktopVisitors,

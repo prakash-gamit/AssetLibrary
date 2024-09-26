@@ -4,6 +4,7 @@ import { Kpi } from "@/entities/Kpi";
 export const MarketingSpendByPlatform: Kpi = {
   name: "MSP",
   descrioption: "Marketing spend on each platform",
+  modalType: "KPI",
   businessQuestions: [
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu eros non arcu scelerisque malesuada.",
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu eros non arcu scelerisque malesuada.",

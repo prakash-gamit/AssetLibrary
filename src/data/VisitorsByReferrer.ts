@@ -8,6 +8,7 @@ export interface VisitorsByReferrer {
 export const VisitorsByReferrer: Kpi = {
   name: "VBR",
   descrioption: "Website visitors based on referrer",
+  modalType: "KPI",
   businessQuestions: [
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu eros non arcu scelerisque malesuada.",
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu eros non arcu scelerisque malesuada.",
