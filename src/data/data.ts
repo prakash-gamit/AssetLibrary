@@ -1,4 +1,5 @@
 import { Kpi } from "@/entities/Kpi";
+import { Layout } from "@/entities/Layout";
 import { MarketingSpendByMonth } from "./MarketingSpendByMonth";
 import { MarketingSpendByPlatform } from "./MarketingSpendByPlatform";
 import { MonthlyDesktopVisitors } from "./MonthlyDesktopVisitorsKpi";
@@ -6,7 +7,7 @@ import { MonthlyMobileVisitors } from "./MonthlyMobileVisitorsKpi";
 import { MonthlyVisitorsBrowser } from "./MonthlyVisitorsBrowserKpi";
 import { VisitorsByReferrer } from "./VisitorsByReferrer";
 import { VisitorsLayout } from "./VisitorsLayout";
-import { Layout } from "@/entities/Layout";
+import { PrakashStoryboard } from "./PrakashStoryboard";
 
 export const kpisList = [
   MonthlyDesktopVisitors,
@@ -34,3 +35,5 @@ export const featuredList = [
   VisitorsByReferrer,
   MarketingSpendByMonth,
 ];
+
+export const storyboards = [PrakashStoryboard];

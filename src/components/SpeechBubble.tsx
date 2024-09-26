@@ -2,7 +2,7 @@ import React from "react";
 import "./SpeechBubble.css";
 
 interface SpeechBubbleProps {
-  children: React.ReactElement;
+  children: React.ReactNode;
 }
 
 export default function SpeechBubble({ children }: SpeechBubbleProps) {

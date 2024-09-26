@@ -12,7 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { kpisList, layoutsList } from "@/data/data";
+import { kpisList, layoutsList, storyboards } from "@/data/data";
 import { ModalType } from "@/entities/BaseModal";
 import { Kpi, VisualChart } from "@/entities/Kpi";
 import { Layout } from "@/entities/Layout";
@@ -22,6 +22,8 @@ import useFavourites from "@/store/useFavourites";
 import { Bookmark, Grid3X3, Link2 } from "lucide-react";
 import { Params, useLoaderData, useNavigate } from "react-router-dom";
 import RequestAccess from "./RequestAccess";
+import { Storyboard } from "@/entities/Storyboard";
+import SpeechBubble from "@/components/SpeechBubble";
 
 export async function assetLoader({ params }: { params: Params<"assetId"> }) {
   return {
@@ -31,11 +33,22 @@ export async function assetLoader({ params }: { params: Params<"assetId"> }) {
     layout: layoutsList.filter(
       (l) => l.name.toLocaleLowerCase() === params?.assetId?.toLocaleLowerCase()
     )?.[0],
+    storyboard: storyboards.filter(
+      (s) => s.name.toLocaleLowerCase() === params?.assetId?.toLocaleLowerCase()
+    )?.[0],
   };
 }
 
 export default function AssetRoute() {
-  const { kpi, layout } = useLoaderData() as { kpi: Kpi; layout: Layout };
+  const {
+    kpi,
+    layout: _layout,
+    storyboard,
+  } = useLoaderData() as {
+    kpi: Kpi;
+    layout: Layout;
+    storyboard: Storyboard;
+  };
   const navigate = useNavigate();
   const { toast } = useToast();
   const { favourites, addToFavourites, removeFromFavourites } = useFavourites();
@@ -56,18 +69,27 @@ export default function AssetRoute() {
     userHasAccess = kpi.userHasAccess;
   }
 
+  let layout = _layout;
   if (layout) {
     id = layout.name;
     modalType = "LAYOUT";
-    // questions = layout.visuals.reduce((acc: string[], l) => {
-    //   return [...acc, ...l.kpi.businessQuestions];
-    // }, []);
     visuals = layout.visuals.reduce((acc: VisualChart[], v) => {
       return [...acc, v.kpi.visuals[v.kpiChartIndex]];
     }, []);
     isFavourite = favourites.includes(layout.name);
     userHasAccess = layout.userHasAccess;
   }
+
+  if (storyboard) {
+    id = storyboard.name;
+    modalType = "STORYBOARD";
+    isFavourite = favourites.includes(storyboard.name);
+    userHasAccess = storyboard.userHasAccess;
+    layout = storyboard.layout;
+  }
+
+  console.log(layout);
+
   return (
     <Dialog
       open
@@ -146,13 +168,13 @@ export default function AssetRoute() {
         )}
 
         {userHasAccess &&
-          layout?.visuals.map((v) => {
+          layout?.visuals.map((v, index) => {
             const i = v.kpiChartIndex;
             const type = v.kpi.visuals[i].type;
             const kpi = v.kpi;
 
             return (
-              <div key={v.kpiChartIndex}>
+              <div key={v.kpiChartIndex} className="relative">
                 {type === "BarChart" && (
                   <BarChartViz
                     chartData={kpi.chartData}
@@ -188,6 +210,13 @@ export default function AssetRoute() {
                     chartTitle={kpi.descrioption}
                   />
                 )}
+
+                {modalType === "STORYBOARD" &&
+                  storyboard.stories[index] !== undefined && (
+                    <div className="absolute top-0 right-0">
+                      <SpeechBubble>{storyboard.stories[index]}</SpeechBubble>
+                    </div>
+                  )}
               </div>
             );
           })}
