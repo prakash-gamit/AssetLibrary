@@ -5,7 +5,7 @@ import { TabsContent } from "@/components/ui/tabs";
 
 export default function HomeRoute() {
   return (
-    <TabsContent value="featured">
+    <TabsContent value="/">
       <SectionTitle title="Featured" className="mt-8" />
       <SectionDescription
         description="Curated top picks from this week"

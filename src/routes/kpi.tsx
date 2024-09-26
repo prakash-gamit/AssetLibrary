@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 export default function KpiRoute() {
   return (
-    <TabsContent value="kpi" className="grid grid-cols-2 gap-8">
+    <TabsContent value="/kpi" className="grid grid-cols-2 gap-8">
       {kpisList.map((m) => {
         const assetRoute = `/asset/${m.name.toLocaleLowerCase()}`;
         return (

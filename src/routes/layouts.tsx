@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 export default function LayoutsRoute() {
   return (
-    <TabsContent value="layouts" className="grid grid-cols-2 gap-8">
+    <TabsContent value="/layouts" className="grid grid-cols-2 gap-8">
       {layoutsList.map((l) => {
         const assetRoute = `/asset/${l.name.toLocaleLowerCase()}`;
         return (
