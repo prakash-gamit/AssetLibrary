@@ -152,6 +152,7 @@ export default function AssetRoute({ type }: AssetModalProps) {
                   chartData={kpi.chartData}
                   chartConfig={kpi.visuals[i].chartConfig}
                   dataKeys={kpi.visuals[i].dataKeys}
+                  chartTitle={kpi.descrioption}
                 />
               )}
 
@@ -160,6 +161,7 @@ export default function AssetRoute({ type }: AssetModalProps) {
                   chartData={kpi.chartData}
                   chartConfig={kpi.visuals[i].chartConfig}
                   dataKeys={kpi.visuals[i].dataKeys}
+                  chartTitle={kpi.descrioption}
                 />
               )}
 
@@ -168,6 +170,7 @@ export default function AssetRoute({ type }: AssetModalProps) {
                   chartData={kpi.chartData}
                   chartConfig={kpi.visuals[i].chartConfig}
                   dataKeys={kpi.visuals[i].dataKeys}
+                  chartTitle={kpi.descrioption}
                 />
               )}
 
@@ -176,6 +179,7 @@ export default function AssetRoute({ type }: AssetModalProps) {
                   chartData={kpi.chartData}
                   chartConfig={kpi.visuals[i].chartConfig}
                   dataKeys={kpi.visuals[i].dataKeys}
+                  chartTitle={kpi.descrioption}
                 />
               )}
             </div>
