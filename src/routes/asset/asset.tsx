@@ -13,6 +13,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { kpisList, layoutsList } from "@/data/data";
+import { ModalType } from "@/entities/BaseModal";
 import { Kpi, VisualChart } from "@/entities/Kpi";
 import { Layout } from "@/entities/Layout";
 import { useToast } from "@/hooks/use-toast";
@@ -20,10 +21,7 @@ import { cn } from "@/lib/utils";
 import useFavourites from "@/store/useFavourites";
 import { Bookmark, Grid3X3, Link2 } from "lucide-react";
 import { Params, useLoaderData, useNavigate } from "react-router-dom";
-
-type AssetModalProps = {
-  type: "KPI" | "LAYOUT";
-};
+import RequestAccess from "./RequestAccess";
 
 export async function assetLoader({ params }: { params: Params<"assetId"> }) {
   return {
@@ -36,7 +34,7 @@ export async function assetLoader({ params }: { params: Params<"assetId"> }) {
   };
 }
 
-export default function AssetRoute({ type }: AssetModalProps) {
+export default function AssetRoute() {
   const { kpi, layout } = useLoaderData() as { kpi: Kpi; layout: Layout };
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -46,15 +44,21 @@ export default function AssetRoute({ type }: AssetModalProps) {
   let questions: string[] = [];
   let visuals: VisualChart[] = [];
   let isFavourite = false;
+  let modalType: ModalType = "KPI";
+  let userHasAccess: boolean | undefined = false;
+
   if (kpi) {
     id = kpi.name;
     questions = kpi.businessQuestions;
     visuals = kpi.visuals;
     isFavourite = favourites.includes(kpi.name);
+    modalType = "KPI";
+    userHasAccess = kpi.userHasAccess;
   }
 
   if (layout) {
     id = layout.name;
+    modalType = "LAYOUT";
     // questions = layout.visuals.reduce((acc: string[], l) => {
     //   return [...acc, ...l.kpi.businessQuestions];
     // }, []);
@@ -62,6 +66,7 @@ export default function AssetRoute({ type }: AssetModalProps) {
       return [...acc, v.kpi.visuals[v.kpiChartIndex]];
     }, []);
     isFavourite = favourites.includes(layout.name);
+    userHasAccess = layout.userHasAccess;
   }
   return (
     <Dialog
@@ -90,14 +95,14 @@ export default function AssetRoute({ type }: AssetModalProps) {
           <DialogTitle className="text-5xl flex items-center">
             <span>{kpi?.name ?? layout?.name}</span>
             <Badge variant="secondary" className="ml-4 text-gray-400 text-base">
-              {type}
+              {modalType}
             </Badge>
           </DialogTitle>
           <DialogDescription className="text-center text-lg">
             {kpi?.descrioption ?? layout?.descrioption}
           </DialogDescription>
         </DialogHeader>
-        {kpi && type === "KPI" && (
+        {kpi && userHasAccess && modalType === "KPI" && (
           <div className="flex flex-col gap-4 mt-8">
             <div className="text-3xl font-semibold">Available Charts</div>
             {visuals.map((v, i) => {
@@ -140,53 +145,54 @@ export default function AssetRoute({ type }: AssetModalProps) {
           </div>
         )}
 
-        {layout?.visuals.map((v) => {
-          const i = v.kpiChartIndex;
-          const type = v.kpi.visuals[i].type;
-          const kpi = v.kpi;
+        {userHasAccess &&
+          layout?.visuals.map((v) => {
+            const i = v.kpiChartIndex;
+            const type = v.kpi.visuals[i].type;
+            const kpi = v.kpi;
 
-          return (
-            <div key={v.kpiChartIndex}>
-              {type === "BarChart" && (
-                <BarChartViz
-                  chartData={kpi.chartData}
-                  chartConfig={kpi.visuals[i].chartConfig}
-                  dataKeys={kpi.visuals[i].dataKeys}
-                  chartTitle={kpi.descrioption}
-                />
-              )}
+            return (
+              <div key={v.kpiChartIndex}>
+                {type === "BarChart" && (
+                  <BarChartViz
+                    chartData={kpi.chartData}
+                    chartConfig={kpi.visuals[i].chartConfig}
+                    dataKeys={kpi.visuals[i].dataKeys}
+                    chartTitle={kpi.descrioption}
+                  />
+                )}
 
-              {type === "BarChartHorizontal" && (
-                <BarChartHorizontalViz
-                  chartData={kpi.chartData}
-                  chartConfig={kpi.visuals[i].chartConfig}
-                  dataKeys={kpi.visuals[i].dataKeys}
-                  chartTitle={kpi.descrioption}
-                />
-              )}
+                {type === "BarChartHorizontal" && (
+                  <BarChartHorizontalViz
+                    chartData={kpi.chartData}
+                    chartConfig={kpi.visuals[i].chartConfig}
+                    dataKeys={kpi.visuals[i].dataKeys}
+                    chartTitle={kpi.descrioption}
+                  />
+                )}
 
-              {type === "LineChart" && (
-                <LineChartViz
-                  chartData={kpi.chartData}
-                  chartConfig={kpi.visuals[i].chartConfig}
-                  dataKeys={kpi.visuals[i].dataKeys}
-                  chartTitle={kpi.descrioption}
-                />
-              )}
+                {type === "LineChart" && (
+                  <LineChartViz
+                    chartData={kpi.chartData}
+                    chartConfig={kpi.visuals[i].chartConfig}
+                    dataKeys={kpi.visuals[i].dataKeys}
+                    chartTitle={kpi.descrioption}
+                  />
+                )}
 
-              {type === "PieChart" && (
-                <PieChartViz
-                  chartData={kpi.chartData}
-                  chartConfig={kpi.visuals[i].chartConfig}
-                  dataKeys={kpi.visuals[i].dataKeys}
-                  chartTitle={kpi.descrioption}
-                />
-              )}
-            </div>
-          );
-        })}
+                {type === "PieChart" && (
+                  <PieChartViz
+                    chartData={kpi.chartData}
+                    chartConfig={kpi.visuals[i].chartConfig}
+                    dataKeys={kpi.visuals[i].dataKeys}
+                    chartTitle={kpi.descrioption}
+                  />
+                )}
+              </div>
+            );
+          })}
 
-        {kpi && (
+        {userHasAccess && kpi && (
           <div className="mt-16">
             <div className="text-3xl font-semibold mb-4">
               Business Questions
@@ -198,6 +204,13 @@ export default function AssetRoute({ type }: AssetModalProps) {
             </div>
           </div>
         )}
+
+        {!userHasAccess && (
+          <div className="flex justify-center my-8">
+            <RequestAccess />
+          </div>
+        )}
+
         <DialogFooter>
           <Button
             className="w-full font-semibold"

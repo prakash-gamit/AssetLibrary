@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./error-page.tsx";
 import "./index.css";
-import AssetRoute, { assetLoader } from "./routes/asset.tsx";
+import AssetRoute, { assetLoader } from "./routes/asset/asset.tsx";
 import Root from "./routes/root.tsx";
 import KpiRoute from "./routes/kpi.tsx";
 import LayoutsRoute from "./routes/layouts.tsx";
@@ -37,7 +37,7 @@ const router = createBrowserRouter([
   },
   {
     path: "asset/:assetId",
-    element: <AssetRoute type="KPI" />,
+    element: <AssetRoute />,
     loader: assetLoader,
   },
 ]);
