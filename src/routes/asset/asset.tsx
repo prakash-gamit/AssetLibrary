@@ -26,16 +26,34 @@ import { Storyboard } from "@/entities/Storyboard";
 import SpeechBubble from "@/components/SpeechBubble";
 
 export async function assetLoader({ params }: { params: Params<"assetId"> }) {
-  return {
-    kpi: kpisList.filter(
-      (k) => k.name.toLocaleLowerCase() === params?.assetId?.toLocaleLowerCase()
-    )?.[0],
-    layout: layoutsList.filter(
+  let modalType: ModalType = "KPI";
+  const kpi = kpisList.filter(
+    (k) => k.name.toLocaleLowerCase() === params?.assetId?.toLocaleLowerCase()
+  )?.[0];
+
+  let layout: Layout | undefined = undefined;
+  if (!kpi) {
+    layout = layoutsList.filter(
       (l) => l.name.toLocaleLowerCase() === params?.assetId?.toLocaleLowerCase()
-    )?.[0],
-    storyboard: storyboards.filter(
+    )?.[0];
+
+    if (layout) modalType = "LAYOUT";
+  }
+
+  let storyboard: Storyboard | undefined = undefined;
+  if (!kpi && !layout) {
+    storyboard = storyboards.filter(
       (s) => s.name.toLocaleLowerCase() === params?.assetId?.toLocaleLowerCase()
-    )?.[0],
+    )?.[0];
+
+    if (storyboard) modalType = "STORYBOARD";
+  }
+
+  return {
+    kpi,
+    layout,
+    storyboard,
+    modalType,
   };
 }
 
@@ -44,10 +62,12 @@ export default function AssetRoute() {
     kpi,
     layout: _layout,
     storyboard,
+    modalType,
   } = useLoaderData() as {
     kpi: Kpi;
     layout: Layout;
     storyboard: Storyboard;
+    modalType: ModalType;
   };
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -57,7 +77,6 @@ export default function AssetRoute() {
   let questions: string[] = [];
   let visuals: VisualChart[] = [];
   let isFavourite = false;
-  let modalType: ModalType = "KPI";
   let userHasAccess: boolean | undefined = false;
 
   if (kpi) {
@@ -65,14 +84,12 @@ export default function AssetRoute() {
     questions = kpi.businessQuestions;
     visuals = kpi.visuals;
     isFavourite = favourites.includes(kpi.name);
-    modalType = "KPI";
     userHasAccess = kpi.userHasAccess;
   }
 
   let layout = _layout;
   if (layout) {
     id = layout.name;
-    modalType = "LAYOUT";
     visuals = layout.visuals.reduce((acc: VisualChart[], v) => {
       return [...acc, v.kpi.visuals[v.kpiChartIndex]];
     }, []);
@@ -82,7 +99,6 @@ export default function AssetRoute() {
 
   if (storyboard) {
     id = storyboard.name;
-    modalType = "STORYBOARD";
     isFavourite = favourites.includes(storyboard.name);
     userHasAccess = storyboard.userHasAccess;
     layout = storyboard.layout;
