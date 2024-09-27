@@ -7,6 +7,7 @@ export const PrakashStoryboard: Storyboard = {
   modalType: "STORYBOARD",
   userHasAccess: true,
   layout: VisitorsLayout,
+  affiliates: ["Engineering", "Product", "Marketing"],
   pptSlides: [
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu eros non arcu scelerisque malesuada.",
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu eros non arcu scelerisque malesuada.",

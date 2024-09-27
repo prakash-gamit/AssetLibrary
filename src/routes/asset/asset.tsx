@@ -1,6 +1,7 @@
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { VisualChart } from "@/entities/Kpi";
 import { useLoaderData, useNavigate } from "react-router-dom";
+import Affiliates from "./Affiliates";
 import { AssetLoader } from "./assetLoader";
 import AssetModalFooter from "./AssetModalFooter";
 import AssetModalHeader from "./AssetModalHeader";
@@ -23,6 +24,8 @@ export default function AssetRoute() {
     kpi?.description ?? _layout?.description ?? storyboard?.description ?? "";
   const userHasAccess =
     kpi?.userHasAccess ?? _layout?.userHasAccess ?? storyboard?.userHasAccess;
+  const affiliates =
+    kpi?.affiliates ?? _layout?.affiliates ?? storyboard?.affiliates;
 
   let layout = _layout;
   if (storyboard) {
@@ -50,6 +53,8 @@ export default function AssetRoute() {
           modalType={modalType}
           description={description}
         />
+
+        {userHasAccess && affiliates && <Affiliates affiliates={affiliates} />}
 
         {userHasAccess && (
           <div className="flex flex-col gap-4 mt-8">

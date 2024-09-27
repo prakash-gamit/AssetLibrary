@@ -6,6 +6,7 @@ export const MonthlyVisitorsBrowser: Kpi = {
   description: "Monthly website visitors by browser",
   modalType: "KPI",
   userHasAccess: true,
+  affiliates: ["Engineering", "Product"],
   businessQuestions: [
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu eros non arcu scelerisque malesuada.",
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu eros non arcu scelerisque malesuada.",

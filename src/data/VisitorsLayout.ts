@@ -8,6 +8,7 @@ export const VisitorsLayout: Layout = {
   description: "Website visitors by desktop/mobile/browser",
   modalType: "LAYOUT",
   userHasAccess: true,
+  affiliates: ["Engineering", "Product", "Marketing"],
   visuals: [
     {
       kpi: MonthlyDesktopVisitors,

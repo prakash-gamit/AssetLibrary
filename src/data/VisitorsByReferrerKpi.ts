@@ -9,6 +9,7 @@ export const VisitorsByReferrer: Kpi = {
   name: "VBR",
   description: "Website visitors based on referrer",
   modalType: "KPI",
+  affiliates: ["Engineering", "Product"],
   businessQuestions: [
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu eros non arcu scelerisque malesuada.",
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu eros non arcu scelerisque malesuada.",
