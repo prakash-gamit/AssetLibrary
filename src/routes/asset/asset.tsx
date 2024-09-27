@@ -11,6 +11,7 @@ import DisplayChart from "./DisplayChart";
 import RequestAccess from "./RequestAccess";
 import KpiList from "./KpiList";
 import AssetLink from "@/components/AssetLink";
+import ErrorPage from "@/error-page";
 
 export default function AssetRoute() {
   const {
@@ -39,6 +40,10 @@ export default function AssetRoute() {
     layout?.visuals.reduce((acc: VisualChart[], v) => {
       return [...acc, v.kpi.visuals[v.kpiChartIndex]];
     }, []);
+
+  if (!kpi && !layout && !storyboard) {
+    return <ErrorPage />;
+  }
 
   return (
     <Dialog
