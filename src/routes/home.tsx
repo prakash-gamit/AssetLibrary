@@ -1,10 +1,9 @@
-import { AssetCard } from "@/components/AssetCard";
+import AssetLink from "@/components/AssetLink";
 import { SectionDescription } from "@/components/SectionDescription";
 import { SectionTitle } from "@/components/SectionTitle";
 import { TabsContent } from "@/components/ui/tabs";
 import { featuredList, kpisMap, layoutsMap, storyboardsMap } from "@/data/data";
 import useFavourites from "@/store/useFavourites";
-import { Link } from "react-router-dom";
 
 export default function HomeRoute() {
   const { favourites } = useFavourites();
@@ -17,13 +16,8 @@ export default function HomeRoute() {
         className="mb-8"
       />
       <div className="grid grid-cols-2 gap-8">
-        {featuredList.map((m) => {
-          const assetRoute = `/asset/${m.name.toLocaleLowerCase()}`;
-          return (
-            <Link to={assetRoute} key={assetRoute} className="w-full">
-              <AssetCard title={m.name} description={m.description} />
-            </Link>
-          );
+        {featuredList.map((asset) => {
+          return <AssetLink asset={asset} key={asset.name} />;
         })}
       </div>
 
@@ -34,13 +28,8 @@ export default function HomeRoute() {
       />
       <div className="grid grid-cols-2 gap-8">
         {favourites.map((f) => {
-          const assetRoute = `/asset/${f.toLocaleLowerCase()}`;
           const asset = kpisMap[f] ?? layoutsMap[f] ?? storyboardsMap[f];
-          return (
-            <Link to={assetRoute} key={assetRoute} className="w-full">
-              <AssetCard title={asset.name} description={asset.description} />
-            </Link>
-          );
+          return <AssetLink asset={asset} key={asset.name} />;
         })}
 
         {favourites.length === 0 && (
