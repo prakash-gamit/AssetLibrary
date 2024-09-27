@@ -1,15 +1,16 @@
+import { Toaster } from "@/components/ui/toaster.tsx";
+import ErrorPage from "@/error-page.tsx";
+import AssetRoute from "@/routes/asset/asset.tsx";
+import { assetLoader } from "@/routes/asset/assetLoader.ts";
+import HomeRoute from "@/routes/home.tsx";
+import KpiRoute from "@/routes/kpi.tsx";
+import LayoutsRoute from "@/routes/layouts.tsx";
+import Root from "@/routes/root.tsx";
+import StoryboardsRoute from "@/routes/storyboards.tsx";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ErrorPage from "./error-page.tsx";
 import "./index.css";
-import AssetRoute, { assetLoader } from "./routes/asset/asset.tsx";
-import Root from "./routes/root.tsx";
-import KpiRoute from "./routes/kpi.tsx";
-import LayoutsRoute from "./routes/layouts.tsx";
-import StoryboardsRoute from "./routes/storyboards.tsx";
-import HomeRoute from "./routes/home.tsx";
-import { Toaster } from "./components/ui/toaster.tsx";
 
 const router = createBrowserRouter([
   {

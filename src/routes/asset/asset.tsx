@@ -2,6 +2,7 @@ import { BarChartHorizontalViz } from "@/charts/BarCharHorizontalViz";
 import { BarChartViz } from "@/charts/BarChartViz";
 import { LineChartViz } from "@/charts/LineChartViz";
 import { PieChartViz } from "@/charts/PieChartViz";
+import SpeechBubble from "@/components/SpeechBubble";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,50 +13,16 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { kpisList, layoutsList, storyboards } from "@/data/data";
 import { ModalType } from "@/entities/BaseModal";
 import { Kpi, VisualChart } from "@/entities/Kpi";
 import { Layout } from "@/entities/Layout";
+import { Storyboard } from "@/entities/Storyboard";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import useFavourites from "@/store/useFavourites";
 import { Bookmark, Grid3X3, Link2 } from "lucide-react";
-import { Params, useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import RequestAccess from "./RequestAccess";
-import { Storyboard } from "@/entities/Storyboard";
-import SpeechBubble from "@/components/SpeechBubble";
-
-export async function assetLoader({ params }: { params: Params<"assetId"> }) {
-  let modalType: ModalType = "KPI";
-  const kpi = kpisList.filter(
-    (k) => k.name.toLocaleLowerCase() === params?.assetId?.toLocaleLowerCase()
-  )?.[0];
-
-  let layout: Layout | undefined = undefined;
-  if (!kpi) {
-    layout = layoutsList.filter(
-      (l) => l.name.toLocaleLowerCase() === params?.assetId?.toLocaleLowerCase()
-    )?.[0];
-
-    if (layout) modalType = "LAYOUT";
-  }
-
-  let storyboard: Storyboard | undefined = undefined;
-  if (!kpi && !layout) {
-    storyboard = storyboards.filter(
-      (s) => s.name.toLocaleLowerCase() === params?.assetId?.toLocaleLowerCase()
-    )?.[0];
-
-    if (storyboard) modalType = "STORYBOARD";
-  }
-
-  return {
-    kpi,
-    layout,
-    storyboard,
-    modalType,
-  };
-}
 
 export default function AssetRoute() {
   const {
