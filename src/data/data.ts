@@ -8,6 +8,7 @@ import { MonthlyVisitorsBrowser } from "./MonthlyVisitorsBrowserKpi";
 import { VisitorsByReferrer } from "./VisitorsByReferrerKpi";
 import { VisitorsLayout } from "./VisitorsLayout";
 import { PrakashStoryboard } from "./PrakashStoryboard";
+import { Storyboard } from "@/entities/Storyboard";
 
 export const kpisList = [
   MonthlyDesktopVisitors,
@@ -37,3 +38,6 @@ export const featuredList = [
 ];
 
 export const storyboards = [PrakashStoryboard];
+
+export const storyboardsMap: { [index: string]: Storyboard } =
+  storyboards.reduce((acc, s) => ({ ...acc, [s.name]: s }), {});

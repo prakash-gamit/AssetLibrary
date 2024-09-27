@@ -2,7 +2,7 @@ import { AssetCard } from "@/components/AssetCard";
 import { SectionDescription } from "@/components/SectionDescription";
 import { SectionTitle } from "@/components/SectionTitle";
 import { TabsContent } from "@/components/ui/tabs";
-import { featuredList, kpisMap, layoutsMap } from "@/data/data";
+import { featuredList, kpisMap, layoutsMap, storyboardsMap } from "@/data/data";
 import useFavourites from "@/store/useFavourites";
 import { Link } from "react-router-dom";
 
@@ -35,7 +35,7 @@ export default function HomeRoute() {
       <div className="grid grid-cols-2 gap-8">
         {favourites.map((f) => {
           const assetRoute = `/asset/${f.toLocaleLowerCase()}`;
-          const asset = kpisMap[f] ?? layoutsMap[f];
+          const asset = kpisMap[f] ?? layoutsMap[f] ?? storyboardsMap[f];
           return (
             <Link to={assetRoute} key={assetRoute} className="w-full">
               <AssetCard title={asset.name} description={asset.description} />
