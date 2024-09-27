@@ -5,9 +5,10 @@ import { MonthlyVisitorsBrowser } from "./MonthlyVisitorsBrowserKpi";
 
 export const VisitorsLayout: Layout = {
   name: "VL",
-  descrioption: "Website visitors by desktop/mobile/browser",
+  description: "Website visitors by desktop/mobile/browser",
   modalType: "LAYOUT",
   userHasAccess: true,
+  affiliates: ["Engineering", "Product", "Marketing"],
   visuals: [
     {
       kpi: MonthlyDesktopVisitors,

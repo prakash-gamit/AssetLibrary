@@ -7,9 +7,10 @@ export interface MonthlyDesktopVisitorsMetric {
 
 export const MonthlyDesktopVisitors: Kpi = {
   name: "MDV",
-  descrioption: "Monthly website visitors on desktop",
+  description: "Monthly website visitors on desktop",
   modalType: "KPI",
   userHasAccess: true,
+  affiliates: ["Engineering", "Product"],
   businessQuestions: [
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu eros non arcu scelerisque malesuada.",
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu eros non arcu scelerisque malesuada.",

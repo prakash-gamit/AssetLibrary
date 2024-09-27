@@ -46,7 +46,7 @@ export const AssetModal = ({ type, kpi, layout }: AssetModalProps) => {
       <DialogTrigger>
         <AssetCard
           title={kpi?.name ?? layout?.name ?? ""}
-          description={kpi?.descrioption ?? layout?.descrioption ?? ""}
+          description={kpi?.description ?? layout?.description ?? ""}
         />
       </DialogTrigger>
       <DialogContent className="max-w-3xl max-h-screen overflow-scroll">
@@ -62,7 +62,7 @@ export const AssetModal = ({ type, kpi, layout }: AssetModalProps) => {
             </Badge>
           </DialogTitle>
           <DialogDescription className="text-center text-lg">
-            {kpi?.descrioption ?? layout?.descrioption}
+            {kpi?.description ?? layout?.description}
           </DialogDescription>
         </DialogHeader>
         {kpi && type === "KPI" && (

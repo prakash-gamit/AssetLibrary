@@ -3,9 +3,10 @@ import { Kpi } from "@/entities/Kpi";
 
 export const MarketingSpendByMonth: Kpi = {
   name: "MSM",
-  descrioption: "Marketing spend by month",
+  description: "Marketing spend by month",
   modalType: "KPI",
   userHasAccess: true,
+  affiliates: ["Engineering", "Marketing"],
   businessQuestions: [
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu eros non arcu scelerisque malesuada.",
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu eros non arcu scelerisque malesuada.",

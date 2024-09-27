@@ -1,11 +1,7 @@
-import { BarChartHorizontalViz } from "@/charts/BarCharHorizontalViz";
-import { BarChartViz } from "@/charts/BarChartViz";
-import { LineChartViz } from "@/charts/LineChartViz";
-import { PieChartViz } from "@/charts/PieChartViz";
-import SpeechBubble from "@/components/SpeechBubble";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { VisualChart } from "@/entities/Kpi";
 import { useLoaderData, useNavigate } from "react-router-dom";
+import Affiliates from "./Affiliates";
 import { AssetLoader } from "./assetLoader";
 import AssetModalFooter from "./AssetModalFooter";
 import AssetModalHeader from "./AssetModalHeader";
@@ -24,19 +20,23 @@ export default function AssetRoute() {
   const navigate = useNavigate();
 
   const assetId = kpi?.name ?? _layout?.name ?? storyboard?.name ?? "";
+  const description =
+    kpi?.description ?? _layout?.description ?? storyboard?.description ?? "";
   const userHasAccess =
     kpi?.userHasAccess ?? _layout?.userHasAccess ?? storyboard?.userHasAccess;
-
-  const visuals =
-    kpi?.visuals ??
-    _layout?.visuals.reduce((acc: VisualChart[], v) => {
-      return [...acc, v.kpi.visuals[v.kpiChartIndex]];
-    }, []);
+  const affiliates =
+    kpi?.affiliates ?? _layout?.affiliates ?? storyboard?.affiliates;
 
   let layout = _layout;
   if (storyboard) {
     layout = storyboard.layout;
   }
+
+  const visuals =
+    kpi?.visuals ??
+    layout?.visuals.reduce((acc: VisualChart[], v) => {
+      return [...acc, v.kpi.visuals[v.kpiChartIndex]];
+    }, []);
 
   return (
     <Dialog
@@ -51,84 +51,32 @@ export default function AssetRoute() {
         <AssetModalHeader
           name={assetId}
           modalType={modalType}
-          description={
-            kpi?.descrioption ??
-            storyboard?.descrioption ??
-            layout?.descrioption ??
-            ""
-          }
+          description={description}
         />
 
-        {kpi && userHasAccess && modalType === "KPI" && (
+        {userHasAccess && affiliates && <Affiliates affiliates={affiliates} />}
+
+        {userHasAccess && (
           <div className="flex flex-col gap-4 mt-8">
-            <div className="text-3xl font-semibold">Available Charts</div>
+            {modalType === "KPI" && (
+              <div className="text-3xl font-semibold">Available Charts</div>
+            )}
+
             {visuals?.map((v, i) => {
               return (
                 <DisplayChart
                   key={i}
                   chartType={v.type}
-                  kpi={kpi}
-                  kpiChartIndex={i}
+                  chartData={kpi?.chartData ?? layout?.visuals[i].kpi.chartData}
+                  visualChart={v}
+                  modalType={modalType}
+                  pptSlide={storyboard?.pptSlides[i]}
+                  chartTitle={layout?.visuals[i].kpi.description}
                 />
               );
             })}
           </div>
         )}
-
-        {userHasAccess &&
-          layout?.visuals.map((v, index) => {
-            const i = v.kpiChartIndex;
-            const type = v.kpi.visuals[i].type;
-            const kpi = v.kpi;
-
-            return (
-              <div key={v.kpiChartIndex} className="relative">
-                {type === "BarChart" && (
-                  <BarChartViz
-                    chartData={kpi.chartData}
-                    chartConfig={kpi.visuals[i].chartConfig}
-                    dataKeys={kpi.visuals[i].dataKeys}
-                    chartTitle={kpi.descrioption}
-                  />
-                )}
-
-                {type === "BarChartHorizontal" && (
-                  <BarChartHorizontalViz
-                    chartData={kpi.chartData}
-                    chartConfig={kpi.visuals[i].chartConfig}
-                    dataKeys={kpi.visuals[i].dataKeys}
-                    chartTitle={kpi.descrioption}
-                  />
-                )}
-
-                {type === "LineChart" && (
-                  <LineChartViz
-                    chartData={kpi.chartData}
-                    chartConfig={kpi.visuals[i].chartConfig}
-                    dataKeys={kpi.visuals[i].dataKeys}
-                    chartTitle={kpi.descrioption}
-                  />
-                )}
-
-                {type === "PieChart" && (
-                  <PieChartViz
-                    chartData={kpi.chartData}
-                    chartConfig={kpi.visuals[i].chartConfig}
-                    dataKeys={kpi.visuals[i].dataKeys}
-                    chartTitle={kpi.descrioption}
-                  />
-                )}
-
-                {modalType === "STORYBOARD" &&
-                  storyboard &&
-                  storyboard.stories[index] !== undefined && (
-                    <div className="absolute top-0 right-0">
-                      <SpeechBubble>{storyboard.stories[index]}</SpeechBubble>
-                    </div>
-                  )}
-              </div>
-            );
-          })}
 
         {userHasAccess && kpi && (
           <BusinessQuestions questions={kpi.businessQuestions} />

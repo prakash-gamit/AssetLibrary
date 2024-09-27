@@ -1,18 +1,12 @@
-import { AssetCard } from "@/components/AssetCard";
+import AssetLink from "@/components/AssetLink";
 import { TabsContent } from "@/components/ui/tabs";
 import { storyboards } from "@/data/data";
-import { Link } from "react-router-dom";
 
 export default function StoryboardsRoute() {
   return (
     <TabsContent value="/storyboards" className="grid grid-cols-2 gap-8">
-      {storyboards.map((l) => {
-        const assetRoute = `/asset/${l.name.toLocaleLowerCase()}`;
-        return (
-          <Link to={assetRoute} key={assetRoute}>
-            <AssetCard title={l.name} description={l.descrioption} />
-          </Link>
-        );
+      {storyboards.map((s) => {
+        return <AssetLink asset={s} key={s.name} />;
       })}
     </TabsContent>
   );
