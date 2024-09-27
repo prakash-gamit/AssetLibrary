@@ -13,4 +13,8 @@ export interface VisualChart {
   dataKeys: string[];
 }
 
-type ChartType = "BarChart" | "BarChartHorizontal" | "LineChart" | "PieChart";
+export type ChartType =
+  | "BarChart"
+  | "BarChartHorizontal"
+  | "LineChart"
+  | "PieChart";

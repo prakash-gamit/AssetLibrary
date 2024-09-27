@@ -13,6 +13,7 @@ import { AssetLoader } from "./assetLoader";
 import AssetModalHeader from "./AssetModalHeader";
 import CopyAssetLink from "./CopyAssetLink";
 import RequestAccess from "./RequestAccess";
+import DisplayChart from "./DisplayChart";
 
 export default function AssetRoute() {
   const {
@@ -81,39 +82,12 @@ export default function AssetRoute() {
             <div className="text-3xl font-semibold">Available Charts</div>
             {visuals.map((v, i) => {
               return (
-                <div key={v.type}>
-                  {v.type === "BarChart" && (
-                    <BarChartViz
-                      chartData={kpi.chartData}
-                      chartConfig={kpi.visuals[i].chartConfig}
-                      dataKeys={kpi.visuals[i].dataKeys}
-                    />
-                  )}
-
-                  {v.type === "BarChartHorizontal" && (
-                    <BarChartHorizontalViz
-                      chartData={kpi.chartData}
-                      chartConfig={kpi.visuals[i].chartConfig}
-                      dataKeys={kpi.visuals[i].dataKeys}
-                    />
-                  )}
-
-                  {v.type === "LineChart" && (
-                    <LineChartViz
-                      chartData={kpi.chartData}
-                      chartConfig={kpi.visuals[i].chartConfig}
-                      dataKeys={kpi.visuals[i].dataKeys}
-                    />
-                  )}
-
-                  {v.type === "PieChart" && (
-                    <PieChartViz
-                      chartData={kpi.chartData}
-                      chartConfig={kpi.visuals[i].chartConfig}
-                      dataKeys={kpi.visuals[i].dataKeys}
-                    />
-                  )}
-                </div>
+                <DisplayChart
+                  key={i}
+                  chartType={v.type}
+                  kpi={kpi}
+                  kpiChartIndex={i}
+                />
               );
             })}
           </div>
