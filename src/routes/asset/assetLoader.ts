@@ -1,10 +1,22 @@
 import { kpisList, layoutsList, storyboards } from "@/data/data";
 import { ModalType } from "@/entities/BaseModal";
+import { Kpi } from "@/entities/Kpi";
 import { Layout } from "@/entities/Layout";
 import { Storyboard } from "@/entities/Storyboard";
 import { Params } from "react-router-dom";
 
-export async function assetLoader({ params }: { params: Params<"assetId"> }) {
+export type AssetLoader = {
+  kpi?: Kpi;
+  layout?: Layout;
+  storyboard?: Storyboard;
+  modalType: ModalType;
+};
+
+export async function assetLoader({
+  params,
+}: {
+  params: Params<"assetId">;
+}): Promise<AssetLoader> {
   let modalType: ModalType = "KPI";
   const kpi = kpisList.filter(
     (k) => k.name.toLocaleLowerCase() === params?.assetId?.toLocaleLowerCase()

@@ -3,25 +3,15 @@ import { BarChartViz } from "@/charts/BarChartViz";
 import { LineChartViz } from "@/charts/LineChartViz";
 import { PieChartViz } from "@/charts/PieChartViz";
 import SpeechBubble from "@/components/SpeechBubble";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { ModalType } from "@/entities/BaseModal";
-import { Kpi, VisualChart } from "@/entities/Kpi";
-import { Layout } from "@/entities/Layout";
-import { Storyboard } from "@/entities/Storyboard";
-import { useToast } from "@/hooks/use-toast";
-import { cn } from "@/lib/utils";
+import { Dialog, DialogContent, DialogFooter } from "@/components/ui/dialog";
+import { VisualChart } from "@/entities/Kpi";
 import useFavourites from "@/store/useFavourites";
-import { Bookmark, Grid3X3, Link2 } from "lucide-react";
+import { Bookmark } from "lucide-react";
 import { useLoaderData, useNavigate } from "react-router-dom";
+import { AssetLoader } from "./assetLoader";
+import AssetModalHeader from "./AssetModalHeader";
+import CopyAssetLink from "./CopyAssetLink";
 import RequestAccess from "./RequestAccess";
 
 export default function AssetRoute() {
@@ -30,14 +20,8 @@ export default function AssetRoute() {
     layout: _layout,
     storyboard,
     modalType,
-  } = useLoaderData() as {
-    kpi: Kpi;
-    layout: Layout;
-    storyboard: Storyboard;
-    modalType: ModalType;
-  };
+  } = useLoaderData() as AssetLoader;
   const navigate = useNavigate();
-  const { toast } = useToast();
   const { favourites, addToFavourites, removeFromFavourites } = useFavourites();
 
   let id: string = "";
@@ -79,32 +63,19 @@ export default function AssetRoute() {
       }}
     >
       <DialogContent className="max-w-3xl max-h-screen overflow-scroll">
-        <Link2
-          className="absolute w-4 right-10 top-3 cursor-pointer -rotate-45"
-          onClick={() => {
-            window.navigator.clipboard.writeText(window.location.href);
-            toast({
-              className: cn(
-                "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"
-              ),
-              description: "Asset link copied to clipboard.",
-            });
-          }}
+        <CopyAssetLink />
+
+        <AssetModalHeader
+          name={id}
+          modalType={modalType}
+          description={
+            kpi?.descrioption ??
+            storyboard?.descrioption ??
+            layout?.descrioption ??
+            ""
+          }
         />
-        <DialogHeader className="items-center">
-          <div className="p-2 bg-gray-100 w-fit rounded-lg mb-2">
-            <Grid3X3 />
-          </div>
-          <DialogTitle className="text-5xl flex items-center">
-            <span>{kpi?.name ?? layout?.name}</span>
-            <Badge variant="secondary" className="ml-4 text-gray-400 text-base">
-              {modalType}
-            </Badge>
-          </DialogTitle>
-          <DialogDescription className="text-center text-lg">
-            {kpi?.descrioption ?? layout?.descrioption}
-          </DialogDescription>
-        </DialogHeader>
+
         {kpi && userHasAccess && modalType === "KPI" && (
           <div className="flex flex-col gap-4 mt-8">
             <div className="text-3xl font-semibold">Available Charts</div>
@@ -193,6 +164,7 @@ export default function AssetRoute() {
                 )}
 
                 {modalType === "STORYBOARD" &&
+                  storyboard &&
                   storyboard.stories[index] !== undefined && (
                     <div className="absolute top-0 right-0">
                       <SpeechBubble>{storyboard.stories[index]}</SpeechBubble>
