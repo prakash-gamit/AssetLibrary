@@ -9,6 +9,8 @@ import BusinessQuestions from "./BusinessQuestions";
 import CopyAssetLink from "./CopyAssetLink";
 import DisplayChart from "./DisplayChart";
 import RequestAccess from "./RequestAccess";
+import KpiList from "./KpiList";
+import AssetLink from "@/components/AssetLink";
 
 export default function AssetRoute() {
   const {
@@ -81,6 +83,17 @@ export default function AssetRoute() {
         {userHasAccess && kpi && (
           <BusinessQuestions questions={kpi.businessQuestions} />
         )}
+
+        {userHasAccess && storyboard && (
+          <div className="mt-8">
+            <div className="text-3xl font-semibold mb-2">Layout</div>
+            <div className="grid grid-cols-2">
+              <AssetLink asset={storyboard.layout} />
+            </div>
+          </div>
+        )}
+
+        {userHasAccess && layout && <KpiList layout={layout} />}
 
         {!userHasAccess && (
           <div className="flex justify-center my-8">
