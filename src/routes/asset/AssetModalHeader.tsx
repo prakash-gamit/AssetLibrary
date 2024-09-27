@@ -1,7 +1,13 @@
 import { Badge } from "@/components/ui/badge";
 import { DialogHeader } from "@/components/ui/dialog";
 import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
-import { Grid3X3 } from "lucide-react";
+import { Grid3X3, Info } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface AssetModalHeaderProps {
   name: string;
@@ -43,6 +49,63 @@ export default function AssetModalHeader({
           </Badge>
         ))}
       </div>
+
+      <div className="flex justify-evenly w-full pt-8">
+        {[
+          {
+            infoKey: "Used",
+            value: "2485",
+            showInfoIcon: true,
+          },
+          {
+            infoKey: "Type",
+            value: "Universal",
+          },
+          {
+            infoKey: "Page No.",
+            value: "6",
+            showInfoIcon: true,
+          },
+          {
+            infoKey: "Last Updated",
+            value: "5 days ago",
+          },
+        ].map(({ infoKey, value, showInfoIcon }) => (
+          <InfoBlock
+            infoKey={infoKey}
+            value={value}
+            showInfoIcon={showInfoIcon}
+          />
+        ))}
+      </div>
     </DialogHeader>
+  );
+}
+
+interface InfoBlockProps {
+  infoKey: string;
+  value: string;
+  showInfoIcon?: boolean;
+}
+function InfoBlock({ infoKey, value, showInfoIcon = false }: InfoBlockProps) {
+  return (
+    <div className="flex flex-col items-center">
+      <div className="font-bold">{value}</div>
+      <div className="text-gray-400 flex text-sm items-center">
+        {infoKey}{" "}
+        {showInfoIcon && (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Info className="w-3 ml-1" />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Random info tooltip</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        )}
+      </div>
+    </div>
   );
 }
