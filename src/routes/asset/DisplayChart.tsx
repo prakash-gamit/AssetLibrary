@@ -8,6 +8,7 @@ import { ChartType, VisualChart } from "@/entities/Kpi";
 
 interface DisplayChartProps {
   chartType: ChartType;
+  chartTitle?: string;
   chartData: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   visualChart: VisualChart;
   modalType: ModalType;
@@ -16,6 +17,7 @@ interface DisplayChartProps {
 
 export default function DisplayChart({
   chartType,
+  chartTitle,
   chartData,
   visualChart,
   modalType,
@@ -28,6 +30,7 @@ export default function DisplayChart({
           chartData={chartData}
           chartConfig={visualChart.chartConfig}
           dataKeys={visualChart.dataKeys}
+          chartTitle={chartTitle}
         />
       )}
 
@@ -36,6 +39,7 @@ export default function DisplayChart({
           chartData={chartData}
           chartConfig={visualChart.chartConfig}
           dataKeys={visualChart.dataKeys}
+          chartTitle={chartTitle}
         />
       )}
 
@@ -44,6 +48,7 @@ export default function DisplayChart({
           chartData={chartData}
           chartConfig={visualChart.chartConfig}
           dataKeys={visualChart.dataKeys}
+          chartTitle={chartTitle}
         />
       )}
 
@@ -52,6 +57,7 @@ export default function DisplayChart({
           chartData={chartData}
           chartConfig={visualChart.chartConfig}
           dataKeys={visualChart.dataKeys}
+          chartTitle={chartTitle}
         />
       )}
 

@@ -66,6 +66,7 @@ export default function AssetRoute() {
                   visualChart={v}
                   modalType={modalType}
                   pptSlide={storyboard?.pptSlides[i]}
+                  chartTitle={layout?.visuals[i].kpi.description}
                 />
               );
             })}
