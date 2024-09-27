@@ -1,11 +1,11 @@
 import { Kpi } from "@/entities/Kpi";
 import { Layout } from "@/entities/Layout";
-import { MarketingSpendByMonth } from "./MarketingSpendByMonth";
-import { MarketingSpendByPlatform } from "./MarketingSpendByPlatform";
+import { MarketingSpendByMonth } from "./MarketingSpendByMonthKpi";
+import { MarketingSpendByPlatform } from "./MarketingSpendByPlatformKpi";
 import { MonthlyDesktopVisitors } from "./MonthlyDesktopVisitorsKpi";
 import { MonthlyMobileVisitors } from "./MonthlyMobileVisitorsKpi";
 import { MonthlyVisitorsBrowser } from "./MonthlyVisitorsBrowserKpi";
-import { VisitorsByReferrer } from "./VisitorsByReferrer";
+import { VisitorsByReferrer } from "./VisitorsByReferrerKpi";
 import { VisitorsLayout } from "./VisitorsLayout";
 import { PrakashStoryboard } from "./PrakashStoryboard";
 
