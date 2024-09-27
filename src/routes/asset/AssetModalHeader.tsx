@@ -25,9 +25,24 @@ export default function AssetModalHeader({
           {modalType}
         </Badge>
       </DialogTitle>
-      <DialogDescription className="text-center text-lg">
+      <DialogDescription className="text-center text-lg text-gray-400">
         {description}
       </DialogDescription>
+      <div className="text-center pt-4">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu
+        eros non arcu scelerisque malesuada. Lorem ipsum dolor sit amet.
+      </div>
+      <div className="flex gap-2">
+        {["#comms", "#coverage", "#stakeholders"].map((tag) => (
+          <Badge
+            key={tag}
+            variant="secondary"
+            className="py-1 px-3 font-semibold text-gray-500 border border-gray-300"
+          >
+            {tag}
+          </Badge>
+        ))}
+      </div>
     </DialogHeader>
   );
 }
