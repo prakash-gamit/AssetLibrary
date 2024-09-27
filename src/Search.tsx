@@ -65,7 +65,7 @@ export default function Search() {
                     asset.name
                       .toLocaleLowerCase()
                       .includes(sanitizedSearchText) ||
-                    asset.descrioption
+                    asset.description
                       .toLocaleLowerCase()
                       .includes(sanitizedSearchText)
                   );
@@ -80,7 +80,7 @@ export default function Search() {
                         navigate(assetRoute);
                       }}
                     >
-                      {`${asset.name}: ${asset.descrioption}: ${asset.modalType}`}
+                      {`${asset.name}: ${asset.description}: ${asset.modalType}`}
                     </CommandItem>
                   );
                 })}

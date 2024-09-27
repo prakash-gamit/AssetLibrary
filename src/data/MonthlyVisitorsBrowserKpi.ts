@@ -3,7 +3,7 @@ import { Kpi } from "@/entities/Kpi";
 
 export const MonthlyVisitorsBrowser: Kpi = {
   name: "MVB",
-  descrioption: "Monthly website visitors by browser",
+  description: "Monthly website visitors by browser",
   modalType: "KPI",
   userHasAccess: true,
   businessQuestions: [

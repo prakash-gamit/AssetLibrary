@@ -10,7 +10,7 @@ export default function LayoutsRoute() {
         const assetRoute = `/asset/${l.name.toLocaleLowerCase()}`;
         return (
           <Link to={assetRoute} key={assetRoute}>
-            <AssetCard title={l.name} description={l.descrioption} />
+            <AssetCard title={l.name} description={l.description} />
           </Link>
         );
       })}

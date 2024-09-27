@@ -10,7 +10,7 @@ export default function KpiRoute() {
         const assetRoute = `/asset/${m.name.toLocaleLowerCase()}`;
         return (
           <Link to={assetRoute} key={assetRoute} className="w-full">
-            <AssetCard title={m.name} description={m.descrioption} />
+            <AssetCard title={m.name} description={m.description} />
           </Link>
         );
       })}

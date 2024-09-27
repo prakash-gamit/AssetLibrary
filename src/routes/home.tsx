@@ -21,7 +21,7 @@ export default function HomeRoute() {
           const assetRoute = `/asset/${m.name.toLocaleLowerCase()}`;
           return (
             <Link to={assetRoute} key={assetRoute} className="w-full">
-              <AssetCard title={m.name} description={m.descrioption} />
+              <AssetCard title={m.name} description={m.description} />
             </Link>
           );
         })}
@@ -38,7 +38,7 @@ export default function HomeRoute() {
           const asset = kpisMap[f] ?? layoutsMap[f];
           return (
             <Link to={assetRoute} key={assetRoute} className="w-full">
-              <AssetCard title={asset.name} description={asset.descrioption} />
+              <AssetCard title={asset.name} description={asset.description} />
             </Link>
           );
         })}

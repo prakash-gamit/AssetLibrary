@@ -1,6 +1,6 @@
 export interface BaseModal {
   name: string;
-  descrioption: string;
+  description: string;
   modalType: ModalType;
   userHasAccess?: boolean | undefined;
 }

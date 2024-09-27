@@ -8,7 +8,7 @@ export interface MonthlyMobileVisitorsMetric {
 
 export const MonthlyMobileVisitors: Kpi = {
   name: "MMV",
-  descrioption: "Monthly website visitors on mobile",
+  description: "Monthly website visitors on mobile",
   modalType: "KPI",
   businessQuestions: [
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu eros non arcu scelerisque malesuada.",
